@@ -1,0 +1,14 @@
+# Blender v2.72 (sub 0) OBJ File: 'plant_library.blend'
+# www.blender.org
+mtllib pyramid.mtl
+o Pyramid_Solid
+v 0.137541 1.336862 0.000000
+v 0.608946 0.003529 -0.816497
+v -0.805268 0.003529 0.000000
+v 0.608946 0.003529 0.816497
+usemtl None
+s off
+f 1 2 3
+f 1 3 4
+f 1 4 2
+f 2 4 3
