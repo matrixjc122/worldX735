@@ -60,14 +60,18 @@ public class worldXMain : MonoBehaviour {
 				Vector3 displacment = new Vector3(x,0,y);
 				Vector3 offset = new Vector3(-objects.GetLength(0)/2.0f,0,-objects.GetLength(1)/2.0f);
 
-				objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["Sand"],displacment + offset, transform.rotation) as GameObject;
+				objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["Terrain_Boden"],displacment + offset, transform.rotation) as GameObject;
 
 				objects[x,y].GetComponent<CoralNeighborhood>().m_ArrayPosition = new Vector2(x,y);
 
 				if( x == objects.GetLength(0)/2 && y == objects.GetLength(1)/2)
-					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["Startpunkt"],displacment + offset, transform.rotation) as GameObject;
-				objects[x,y].SetActive(true);
+					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["TrichterC"],displacment + offset, transform.rotation) as GameObject;
 
+				int rando = Random.Range(0,25);
+				if( rando <= 1  )
+					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["Terrain_Berg"],displacment + offset, transform.rotation) as GameObject;
+
+				objects[x,y].SetActive(true);
 			}
 		}
 	}
