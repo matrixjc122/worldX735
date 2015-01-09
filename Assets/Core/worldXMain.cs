@@ -67,9 +67,26 @@ public class worldXMain : MonoBehaviour {
 				if( x == objects.GetLength(0)/2 && y == objects.GetLength(1)/2)
 					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["TrichterC"],displacment + offset, transform.rotation) as GameObject;
 
+				// distribute mountains
 				int rando = Random.Range(0,25);
 				if( rando <= 1  )
 					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["Terrain_Berg"],displacment + offset, transform.rotation) as GameObject;
+
+				// distribute mountains
+				if( rando >= 1 && rando <= 2 )
+					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["Terrain_Loch"],displacment + offset, transform.rotation) as GameObject;
+					
+				// distribute A
+				if( rando >= 2 && rando <= 5 )
+					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["TrichterA"],displacment + offset, transform.rotation) as GameObject;
+
+				// distribute B
+				if( rando >= 5 && rando <= 7 )
+					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["TrichterB"],displacment + offset, transform.rotation) as GameObject;
+
+				// distribute C
+				if( rando >= 7 && rando <= 8 )
+					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["TrichterC"],displacment + offset, transform.rotation) as GameObject;
 
 				objects[x,y].SetActive(true);
 			}
