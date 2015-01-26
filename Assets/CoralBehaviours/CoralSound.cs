@@ -11,7 +11,6 @@ public class CoralSound : CoralBase {
 		GameObject.Find("audioDummy").GetComponent<AudioControl>().PlaySound("KoralleA");
 		}
 
-
 		if(current_coral_type == "TrichterC3_A1"){
 		GameObject.Find("audioDummy").GetComponent<AudioControl>().PlaySound("KoralleB");
 		}

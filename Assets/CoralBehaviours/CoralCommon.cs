@@ -6,12 +6,20 @@ public class CoralCommon : CoralBase {
 	public virtual void OnMouseDown() {
 
 		string current_coral_type = worldXSingelton.Instance.m_CoralType;
-		GameObject prefab = worldXSingelton.Instance.InstantiatePrefab (current_coral_type, gameObject.transform.position, gameObject.transform.rotation);
 
+		GameObject prefab = worldXSingelton.Instance.InstantiatePrefab (current_coral_type, gameObject.transform.position, Quaternion.identity);
+		prefab.name = gameObject.name;
+
+		/*if (current_coral_type == "Boden") { 
+						prefab = worldXSingelton.Instance.InstantiatePrefab (current_coral_type, gameObject.transform.position, Quaternion.identity);
+				} else {
+						prefab = worldXSingelton.Instance.InstantiatePrefab (current_coral_type, gameObject.transform.position, gameObject.transform.rotation);
+				}
+		*/
 		foreach (string bv in worldXSingelton.Instance.m_CoralPropertyDict[current_coral_type]) 
 			(prefab.GetComponent(bv) as CoralBase) .CopyOf( gameObject.GetComponent(bv) as CoralBase);
 
-		prefab.SetActive (true);
+		prefab.SetActive(true);
 
 		/*
 		foreach (GameObject obj in worldXSingelton.Instance.m_GameObjects)

@@ -6,6 +6,8 @@ public class CoralRotation : CoralBase {
 
 	public float timeLeft = 25;
 
+
+
 	// Use this for initialization
 	void Start () {
 
@@ -43,14 +45,11 @@ public class CoralRotation : CoralBase {
 					transforms [i].localRotation.z);
 		
 			//SET BACK ROTATION OF "BODEN"
-			/*
-			if(transforms [i].gameObject.name == "Terrain_Boden"){
-				transforms [i].localRotation = Quaternion.Euler (
-					transforms [i].localRotation.x - transforms [i].localRotation.x,
-					transforms [i].localRotation.y - transforms [i].localRotation.y,
-					transforms [i].localRotation.z - transforms [i].localRotation.z);
-			}
-			*/
+			if(transforms[i].gameObject.name == "Boden")
+			transforms[i].localRotation = Quaternion.identity;
+
+
+
 	}
 }
 
