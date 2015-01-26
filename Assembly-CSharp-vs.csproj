@@ -50,15 +50,14 @@
      <Compile Include="Assets\CoralBehaviours\CoralBase.cs" />
      <Compile Include="Assets\CoralBehaviours\CoralCommon.cs" />
      <Compile Include="Assets\CoralBehaviours\CoralNeighborhood.cs" />
+     <Compile Include="Assets\CoralBehaviours\CoralRotation.cs" />
      <Compile Include="Assets\CoralBehaviours\CoralRule.cs" />
+     <Compile Include="Assets\CoralBehaviours\CoralSound.cs" />
      <Compile Include="Assets\Core\worldXMain.cs" />
      <Compile Include="Assets\Core\worldXSingelton.cs" />
+     <Compile Include="Assets\Scripts\AudioControl.cs" />
      <Compile Include="Assets\Scripts\MoveCamera.cs" />
      <Compile Include="Assets\UI\UIMain.cs" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
  </Reference>

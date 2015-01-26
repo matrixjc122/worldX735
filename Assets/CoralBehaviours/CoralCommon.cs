@@ -12,6 +12,13 @@ public class CoralCommon : CoralBase {
 			(prefab.GetComponent(bv) as CoralBase) .CopyOf( gameObject.GetComponent(bv) as CoralBase);
 
 		prefab.SetActive (true);
+
+		/*
+		foreach (GameObject obj in worldXSingelton.Instance.m_GameObjects)
+			if(obj != null)
+				obj.GetComponent<CoralRotation>().RandomizeTransformations();
+		*/
+
 		//Debug.Log( prefab.GetComponent<CoralNeighborhood>().m_ArrayPosition + " " + prefab.tag );
 		Destroy (gameObject);
 	}
