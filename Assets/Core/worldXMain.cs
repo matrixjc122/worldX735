@@ -52,6 +52,8 @@ public class worldXMain : MonoBehaviour {
 
 	void InitializeWorld()
 	{
+
+
 		GameObject[,] objects = worldXSingelton.Instance.m_GameObjects;
 		for (int x = 0; x < objects.GetLength(0); x++) 
 		{
@@ -68,6 +70,8 @@ public class worldXMain : MonoBehaviour {
 					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["TrichterC3_A0"],displacment + offset, transform.rotation) as GameObject;
 
 				int rando = Random.Range(0,20);
+
+				/*
 
 				// distribute A
 				if( rando >= 2 && rando <= 5 )
@@ -100,7 +104,7 @@ public class worldXMain : MonoBehaviour {
 				// distribute H
 				if( rando >= 13 && rando <= 14 )
 					objects[x,y] = GameObject.Instantiate(worldXSingelton.Instance.m_CoralPrefabDict["TrichterC4_A4"],displacment + offset, transform.rotation) as GameObject;
-
+				*/
 
 				objects[x,y].SetActive(true);
 			}

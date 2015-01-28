@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\CoralBehaviours\AbstractRule.cs" />
      <Compile Include="Assets\CoralBehaviours\CoralBase.cs" />
+     <Compile Include="Assets\CoralBehaviours\CoralColor.cs" />
      <Compile Include="Assets\CoralBehaviours\CoralCommon.cs" />
      <Compile Include="Assets\CoralBehaviours\CoralNeighborhood.cs" />
      <Compile Include="Assets\CoralBehaviours\CoralRotation.cs" />

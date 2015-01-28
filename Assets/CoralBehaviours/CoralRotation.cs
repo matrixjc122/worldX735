@@ -46,7 +46,7 @@ public class CoralRotation : CoralBase {
 		
 			//SET BACK ROTATION OF "BODEN"
 			if(transforms[i].gameObject.name == "Boden")
-			transforms[i].localRotation = Quaternion.identity;
+				transforms[i].localRotation = Quaternion.identity;
 
 
 
