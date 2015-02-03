@@ -59,6 +59,8 @@
      <Compile Include="Assets\Scripts\AudioControl.cs" />
      <Compile Include="Assets\Scripts\ExtraEigenschaften.cs" />
      <Compile Include="Assets\Scripts\MoveCamera.cs" />
+     <Compile Include="Assets\Scripts\MoveCameraXZ.cs" />
+     <Compile Include="Assets\Scripts\MoveListenerXZ.cs" />
      <Compile Include="Assets\UI\UIMain.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>

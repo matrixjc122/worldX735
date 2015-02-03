@@ -84,20 +84,7 @@ public class MoveCamera : MonoBehaviour
 	{
 		// == Movement Code ==
 		
-		// Rotate camera along X and Y axis
-		if (isRotating)
-		{
-			// Get mouse displacement vector from original to current position
-			Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - mouseOrigin);
-			
-			// Set Drag
-			rigidbody.angularDrag = turnDrag;
-			
-			// Two rotations are required, one for x-mouse movement and one for y-mouse movement
-			rigidbody.AddTorque(-pos.y * turnSpeed * transform.right, ForceMode.Acceleration);
-			rigidbody.AddTorque(pos.x * turnSpeed * transform.up, ForceMode.Acceleration);
-		}
-		
+				
 		// Move (pan) the camera on it's XY plane
 		if (isPanning)
 		{
