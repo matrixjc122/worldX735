@@ -58,6 +58,7 @@
      <Compile Include="Assets\Core\worldXSingelton.cs" />
      <Compile Include="Assets\Scripts\AudioControl.cs" />
      <Compile Include="Assets\Scripts\ExtraEigenschaften.cs" />
+     <Compile Include="Assets\Scripts\IsometricController.cs" />
      <Compile Include="Assets\Scripts\MoveCamera.cs" />
      <Compile Include="Assets\Scripts\MoveCameraXZ.cs" />
      <Compile Include="Assets\Scripts\MoveListenerXZ.cs" />
