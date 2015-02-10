@@ -1,14 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\UI\UIMain.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\worldX735-master\Assets\Core\worldXMain.cs">
     <Files>
-      <File FileName="Assets\Scripts\MoveCameraXZ.cs" Line="26" Column="4" />
-      <File FileName="Assets\Scripts\IsometricController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\ExtraEigenschaften.cs" Line="1" Column="1" />
-      <File FileName="Assets\CoralBehaviours\CoralRotation.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\MoveListenerXZ.cs" Line="1" Column="1" />
-      <File FileName="Assets\Core\worldXSingelton.cs" Line="1" Column="1" />
-      <File FileName="Assets\UI\UIMain.cs" Line="11" Column="35" />
+      <File FileName="..\..\worldX735-master\Assets\Shader\Rim.shader" Line="30" Column="4" />
+      <File FileName="..\..\worldX735-master\Assets\CoralBehaviours\RuleUtil.cs" Line="99" Column="11" />
+      <File FileName="..\..\worldX735-master\Assets\Core\worldXMain.cs" Line="29" Column="50" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
