@@ -3,21 +3,21 @@ using System.Collections;
 
 public class UIMain : MonoBehaviour {
 
+	public Texture icon;
 	// Use this for initialization
 	void OnGUI()
 	{
 		// Make a group on the center of the screen
-		GUILayout.BeginArea (new Rect(0,Screen.height*0.5f-50,100,200));
+		GUILayout.BeginArea (new Rect(15,Screen.height*0.5f-20,100,400));
 
-		IEnumerable keyCollection = worldXSingelton.Instance.m_CoralPropertyDict.Keys;
+		IEnumerable keyCollection = worldXSingelton.ZombiKnownTypes;
 
 		foreach (string coral_name in keyCollection) 
 		{
 			if(GUILayout.Button (coral_name))
 			{
 				Debug.Log(coral_name + " selected!");
-				worldXSingelton.Instance.m_CoralType = coral_name;
-
+				worldXSingelton.UISelectedType = coral_name;
 			}
 		}
 

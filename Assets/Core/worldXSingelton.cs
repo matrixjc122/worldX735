@@ -1,80 +1,74 @@
-﻿using System;
+﻿
+
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
-
-public class Coral
+public  class worldXSingelton
 {
-	public string name;
-	public List<string> behaviours;
-}
-
-public class worldXSingelton
-{
-	private static worldXSingelton instance;
-	public GameObject[,] m_GameObjects = null;
-	public int[,] m_BehavioralMatrix = {{5,-1,-1},{4,0,-1},{-1,-1,-1}};
-	public Vector2 m_WorldSize{ set; get;}
-	public string m_CoralType{ set; get;}
-	// Dict<string , Dict<string, string> > in zukunft
-	public Dictionary<string, List<string> > m_CoralPropertyDict = new Dictionary<string, List<string> > (); 
-	public Dictionary<string, GameObject > m_CoralPrefabDict = new Dictionary<string, GameObject >();
-
+	private static worldXSingelton instance_private;
+	public static GameObject[,] WorldObjects{ set;get;}
+	public static Vector2 WorldSize{ set; get;}
+	private static Dictionary<string, GameObject > ZombiDict{ set; get;}
+	public static string UISelectedType{ set; get;}
+	public static bool UIOnly{ set; get;}
+	public static  Dictionary<string, GameObject >.KeyCollection ZombiKnownTypes{ set;get;}
 	
-	private worldXSingelton() 
+
+	// *---------------- STATIC
+	public static void LoadZombiPrefab(string typeName)
 	{
+
+
+		GameObject zombi = GameObject.Instantiate (Resources.Load (typeName)) as GameObject;
+
+		zombi.GetComponent<Common>().FigureType = typeName;
+		zombi.SetActive(false); // mark it as zombi
+		
+		ZombiDict.Add (typeName, zombi);
+
+		ZombiKnownTypes = ZombiDict.Keys;
+
+	}
+
+	public static void StaticInitialisation(Vector2 worldSize)
+	{
+		instance_private = new worldXSingelton();
+		WorldSize = worldSize;
+		WorldObjects = new GameObject[(int)worldXSingelton.WorldSize.x, (int)worldXSingelton.WorldSize.y];
+		ZombiDict = new Dictionary<string, GameObject>();
+		UISelectedType = "A";
 	}
 	
 	public static worldXSingelton Instance
 	{
 		get 
 		{
-			if (instance == null)
+			if (instance_private == null)
 			{
-				instance = new worldXSingelton();
+				StaticInitialisation( new Vector2(5,5));
 			}
-			return instance;
+			return instance_private;
 		}
 	}
 	
-	public void InitializeGameObjects (Vector2 size)
-	{
 
-		if (m_GameObjects == null) 
-			m_GameObjects = new GameObject[(int)size.x, (int)size.y];
+	//	*---------------- REFACTORED
+
+	public static GameObject CloneZombiPrefab(string key)
+	{
+		return CloneZombiPrefab (key, new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0));
 	}
-
-	public void AddCoralDefinition(string typeName, params string[] behaviourName)
+	
+	public static GameObject CloneZombiPrefab(string key, Vector3 positon, Quaternion rotation)
 	{
-		m_CoralPropertyDict.Add(typeName, new List<string>(behaviourName));
-	}
-
-	public void AddCoralGameObject(string typeName)
-	{
-		m_CoralPrefabDict.Add (typeName, GameObject.Instantiate (Resources.Load (typeName)) as GameObject);
-		m_CoralPrefabDict [typeName].name = typeName;
-		foreach( string behaviour in m_CoralPropertyDict[typeName])
-		{
-			m_CoralPrefabDict[typeName].AddComponent(behaviour);
-		}
-		m_CoralPrefabDict[typeName].SetActive(false);
-	}
-
-	public GameObject InstantiatePrefab(string key)
-	{
-
-		return InstantiatePrefab (key, new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0));
-	}
-
-	public GameObject InstantiatePrefab(string key, Vector3 positon, Quaternion rotation)
-	{
-		GameObject go = GameObject.Instantiate (m_CoralPrefabDict [key], positon, rotation) as GameObject;
-		//go.tag = key;
+		GameObject go = GameObject.Instantiate (ZombiDict [key], positon, rotation) as GameObject;
+		go.GetComponent<Common> ().InitBy (ZombiDict [key].GetComponent<Common>());
 		return go;
 	}
 
-//	public void 
 
 
 }
