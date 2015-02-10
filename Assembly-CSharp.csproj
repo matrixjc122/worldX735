@@ -54,11 +54,13 @@
      <Compile Include="Assets\Core\worldXSingelton.cs" />
      <Compile Include="Assets\Scripts\AudioControl.cs" />
      <Compile Include="Assets\Scripts\ExtraEigenschaften.cs" />
+     <Compile Include="Assets\Scripts\GlowScript.cs" />
      <Compile Include="Assets\Scripts\IsometricController.cs" />
      <Compile Include="Assets\Scripts\MoveCamera.cs" />
      <Compile Include="Assets\Scripts\MoveCameraXZ.cs" />
      <Compile Include="Assets\Scripts\MoveListenerXZ.cs" />
      <Compile Include="Assets\UI\UIMain.cs" />
+     <None Include="Assets\shader\ItemGlow.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
