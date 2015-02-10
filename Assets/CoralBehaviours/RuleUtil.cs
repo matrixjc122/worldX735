@@ -17,16 +17,13 @@ public static class RuleUtil {
 		Dictionary<string, int> output = new Dictionary<string, int > ();
 
 		foreach(string key in worldXSingelton.ZombiKnownTypes)
-		{
 			output.Add(key,0);
-		}
+
 		return output;
 	}
 
 	public static Dictionary<string,int> GetHitsFor(GameObject centerObject)
 	{
-
-		//string type_self = cb.FigureType;
 		Vector2 pos_self = centerObject.GetComponent<Common> ().FigurePosition;
 		Dictionary<string,int> dict = CreateEmptyTypeDictionary ();
 
@@ -44,6 +41,7 @@ public static class RuleUtil {
 
 					pos_local.x += x;
 					pos_local.y += y;
+
 
 					if(pos_local.x < 0)
 					{
@@ -79,15 +77,25 @@ public static class RuleUtil {
 		return dict;
  }
 
-	public static bool IsPlaceable(Dictionary<string, int> hits, string type)
+	public static bool IsPlaceable(GameObject obj)
 	{
+		Common obj_common = obj.GetComponent<Common> ();
+		if(obj_common == null)
+		{ 
+			Debug.LogError("The passed object is not placable. It doesn't contain a Common behaviour.");
+			return false;
+		}
+
+
+		Dictionary<string, int> hits = GetHitsFor (obj);
+		string type = obj_common.FigureType;
 		bool isPlaceable = false;
 		switch (type) {
 		case("Boden"):
 				isPlaceable = true;
 				break;
 		case("A"):
-			isPlaceable = (hits ["A"] >= 1 || hits ["B"] >= 1 || hits ["C"] >= 1)
+			isPlaceable = (hits ["A"] >= 1 || hits ["B"] >= 1 || hits ["C"] >= 1) // Or'd Minimal requirements
 				&& hits ["A"] <= 4 && hits ["B"] <= 4 && hits ["C"] <= 4;
 				break;
 		case("B"):

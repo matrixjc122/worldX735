@@ -23,13 +23,7 @@ public class Common : Base {
 		prefabGameObject.GetComponent<Common> ().FigurePosition = this.FigurePosition;
 		prefabGameObject.GetComponent<Common> ().FigureType = worldXSingelton.UISelectedType;
 
-		Dictionary<string,int> hits = RuleUtil.GetHitsFor (prefabGameObject);
-
-		foreach(string key in hits.Keys)
-			Debug.Log(key + " " + hits[key]);
-
-
-		if (RuleUtil.IsPlaceable(hits,worldXSingelton.UISelectedType)) 
+		if (RuleUtil.IsPlaceable(prefabGameObject)) 
 		{
 			worldXSingelton.WorldObjects[(int)FigurePosition.x, (int)FigurePosition.y] = prefabGameObject;
 			prefabGameObject.SetActive (true);	

@@ -10,11 +10,14 @@ public  class worldXSingelton
 {
 	private static worldXSingelton instance_private;
 	public static GameObject[,] WorldObjects{ set;get;}
+
 	public static Vector2 WorldSize{ set; get;}
+
 	private static Dictionary<string, GameObject > ZombiDict{ set; get;}
+	public static  Dictionary<string, GameObject >.KeyCollection ZombiKnownTypes{ set;get;}
+
 	public static string UISelectedType{ set; get;}
 	public static bool UIOnly{ set; get;}
-	public static  Dictionary<string, GameObject >.KeyCollection ZombiKnownTypes{ set;get;}
 	
 
 	// *---------------- STATIC
