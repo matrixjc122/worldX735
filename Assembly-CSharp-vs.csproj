@@ -52,6 +52,10 @@
      <Compile Include="Assets\CoralBehaviours\RuleUtil.cs" />
      <Compile Include="Assets\Core\worldXMain.cs" />
      <Compile Include="Assets\Core\worldXSingelton.cs" />
+     <Compile Include="Assets\RuleAdministration\Administrators\CoralRuleAdministrator.cs" />
+     <Compile Include="Assets\RuleAdministration\Interfaces\IRule.cs" />
+     <Compile Include="Assets\RuleAdministration\Interfaces\IRuleAdministrator.cs" />
+     <Compile Include="Assets\RuleAdministration\Rules\BrainCoralRule.cs" />
      <Compile Include="Assets\Scripts\AudioControl.cs" />
      <Compile Include="Assets\Scripts\ExtraEigenschaften.cs" />
      <Compile Include="Assets\Scripts\GlowScript.cs" />
