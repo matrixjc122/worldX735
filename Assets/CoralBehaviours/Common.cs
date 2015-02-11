@@ -16,8 +16,6 @@ public class Common : Base {
 
 	public virtual void OnMouseDown() {
 
-		Debug.Log("Click on " + this.FigureType );
-
 		// Create CoralCopy (applies position, name, behavioral properties
 		GameObject prefabGameObject = worldXSingelton.CloneZombiPrefab (worldXSingelton.UISelectedType, gameObject.transform.position, Quaternion.identity);
 		prefabGameObject.GetComponent<Common> ().FigurePosition = this.FigurePosition;
