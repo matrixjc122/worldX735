@@ -17,14 +17,16 @@ public class UIOnClickBehaviour : MonoBehaviour {
 
 	void OnClick()
 	{
-		if (gameObject.name == "ButtonA")
-			worldXSingelton.UISelectedType = "A";
-		if (gameObject.name == "ButtonB")
-			worldXSingelton.UISelectedType = "B";
-		if (gameObject.name == "ButtonC")
-			worldXSingelton.UISelectedType = "C";
-		if (gameObject.name == "ButtonBoden")
-			worldXSingelton.UISelectedType = "Boden";
+		if (gameObject.name == "Button_A")
+						worldXSingelton.UISelectedType = "A";
+				else if (gameObject.name == "Button_B")
+						worldXSingelton.UISelectedType = "B";
+				else if (gameObject.name == "Button_C")
+						worldXSingelton.UISelectedType = "C";
+				else if (gameObject.name == "Button_Boden")
+						worldXSingelton.UISelectedType = "Boden";
+				else
+						Debug.Log ("Button behaviour not set");
 	}
 
 }
