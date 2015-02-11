@@ -96,7 +96,7 @@ public static class RuleUtil {
 				break;
 		case("A"):
 			isPlaceable = (hits ["A"] >= 1 || hits ["B"] >= 1 || hits ["C"] >= 1) // Or'd Minimal requirements
-				&& hits ["A"] <= 4 && hits ["B"] <= 4 && hits ["C"] <= 4;
+				&& hits ["A"] <= 2 && hits ["B"] <= 4 && hits ["C"] <= 4;
 				break;
 		case("B"):
 
