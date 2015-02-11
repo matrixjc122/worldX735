@@ -45,7 +45,7 @@ public class Rotation : Base {
 					transforms [i].localRotation.z);
 		
 			//SET BACK ROTATION OF "BODEN"
-			if(transforms[i].gameObject.name == "Boden")
+			if(transforms[i].gameObject.name == "Boden" || transforms[i].gameObject.name == "Particle System" )
 				transforms[i].localRotation = Quaternion.identity;
 
 
