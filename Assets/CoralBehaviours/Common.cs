@@ -21,14 +21,14 @@ public class Common : Base {
 		prefabGameObject.GetComponent<Common> ().FigurePosition = this.FigurePosition;
 		prefabGameObject.GetComponent<Common> ().FigureType = worldXSingelton.UISelectedType;
 
-		if (RuleUtil.IsPlaceable(prefabGameObject)) 
-		{
-			worldXSingelton.WorldObjects[(int)FigurePosition.x, (int)FigurePosition.y] = prefabGameObject;
-			prefabGameObject.SetActive (true);	
-			Destroy (gameObject);
-		} else {
-			Destroy (prefabGameObject);
-		}
+		// if (RuleUtil.IsPlaceable(prefabGameObject))  call rueladmin
+//		{
+//			worldXSingelton.WorldObjects[(int)FigurePosition.x, (int)FigurePosition.y] = prefabGameObject;
+//			prefabGameObject.SetActive (true);	
+//			Destroy (gameObject);
+//		} else {
+//			Destroy (prefabGameObject);
+//		}
 
 	}
 }	 

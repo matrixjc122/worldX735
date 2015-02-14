@@ -73,5 +73,13 @@ public  class worldXSingelton
 	}
 
 
-
+	public static Dictionary<string,int> CreateEmptyTypeDictionary()
+	{
+		Dictionary<string, int> output = new Dictionary<string, int > ();
+		
+		foreach(string key in worldXSingelton.ZombiKnownTypes)
+			output.Add(key,0);
+		
+		return output;
+	}
 }
