@@ -18,22 +18,18 @@ public  class worldXSingelton
 
 	public static string UISelectedType{ set; get;}
 	public static bool UIOnly{ set; get;}
+	public static bool UIAction{ set; get;}
 	
 
 	// *---------------- STATIC
 	public static void LoadZombiPrefab(string typeName)
 	{
-
-
 		GameObject zombi = GameObject.Instantiate (Resources.Load (typeName)) as GameObject;
-
 		zombi.GetComponent<Common>().FigureType = typeName;
+		zombi.GetComponent<Common>().FigureWillpower = 1.0f;
 		zombi.SetActive(false); // mark it as zombi
-		
 		ZombiDict.Add (typeName, zombi);
-
 		ZombiKnownTypes = ZombiDict.Keys;
-
 	}
 
 	public static void StaticInitialisation(Vector2 worldSize)

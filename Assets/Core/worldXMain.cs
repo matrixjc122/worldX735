@@ -2,8 +2,13 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using RuleAdministration.Administrators;
+using RuleAdministration.Rules;
 
 public class worldXMain : MonoBehaviour {
+
+	public string[] rules; 
+
 	
 	// Use this for initialization
 	void Start () {

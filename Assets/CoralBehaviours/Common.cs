@@ -1,34 +1,33 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using RuleAdministration.Administrators;
+using RuleAdministration.Rules;
 
 public class Common : Base {
 
 	public override void InitBy(Base other){
 		this.FigurePosition = ((Common)other).FigurePosition;
 		this.FigureType = ((Common)other).FigureType;
+		this.FigureWillpower = ((Common)other).FigureWillpower;;
 	}	
 	
 	// should be defined in CoralCommon
 	public virtual string FigureType{ set; get;}
 	public virtual Vector2 FigurePosition{ set; get;}
+	public virtual float FigureWillpower{set;get;}
 
+
+	public Common()
+	{
+		
+	}
 
 	public virtual void OnMouseDown() {
 
-		// Create CoralCopy (applies position, name, behavioral properties
-		GameObject prefabGameObject = worldXSingelton.CloneZombiPrefab (worldXSingelton.UISelectedType, gameObject.transform.position, Quaternion.identity);
-		prefabGameObject.GetComponent<Common> ().FigurePosition = this.FigurePosition;
-		prefabGameObject.GetComponent<Common> ().FigureType = worldXSingelton.UISelectedType;
+		
+		ActionAdministrator.Instance.ApplyAction <RespawnAction>(gameObject);
 
-		// if (RuleUtil.IsPlaceable(prefabGameObject))  call rueladmin
-//		{
-//			worldXSingelton.WorldObjects[(int)FigurePosition.x, (int)FigurePosition.y] = prefabGameObject;
-//			prefabGameObject.SetActive (true);	
-//			Destroy (gameObject);
-//		} else {
-//			Destroy (prefabGameObject);
-//		}
-
+		Debug.Log (ActionAdministrator.Instance._ErrorMessage.ToString ());
 	}
 }	 
