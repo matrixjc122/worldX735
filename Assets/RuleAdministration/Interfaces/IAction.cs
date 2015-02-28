@@ -8,12 +8,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using UnityEngine;
+
+
 namespace RuleAdministration.Interfaces
 {
-		public interface IRule
-		{
-			bool IsApplicable(/* coral type */);
-			bool CoralIsPlaceable(/* board cell */);
-		}
+	public interface IAction
+	{
+		bool IsApplicable(GameObject ob);
+
+		bool ProcessAction(GameObject ob);
+
+		string Name();
+		
+	}
 }
 

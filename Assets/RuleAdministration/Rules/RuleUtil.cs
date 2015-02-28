@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 public static class RuleUtil {
 
-	public static Dictionary<string,int> GetHitsFor(GameObject centerObject, bool [,] Neighborhood)
+	public static Dictionary<string,int> GetHitsFor(Vector2 center_pos, bool [,] Neighborhood)
 	{
-		Vector2 pos_self = centerObject.GetComponent<Common> ().FigurePosition;
+		//Vector2 pos_self = centerObject.GetComponent<Common> ().FigurePosition;
 		Dictionary<string,int> dict = worldXSingelton.CreateEmptyTypeDictionary ();
 		
 		for (int x =0; x < Neighborhood.GetLength(0); x++) 
@@ -21,7 +21,7 @@ public static class RuleUtil {
 					int world_height = worldXSingelton.WorldObjects.GetLength(1);
 					
 					//go to upper left corner of the mask array relative to current pos_self
-					Vector2 pos_local = pos_self + new Vector2(-1,-1);
+					Vector2 pos_local = center_pos + new Vector2(-1,-1);
 					
 					pos_local.x += x;
 					pos_local.y += y;
@@ -58,7 +58,8 @@ public static class RuleUtil {
 		
 		return dict;
 	}
+
+
 	
 }
 
-	

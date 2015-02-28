@@ -8,6 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
+using UnityEngine;
+
+
 namespace RuleAdministration.Interfaces
 {
 	    /// <summary>
@@ -15,9 +18,13 @@ namespace RuleAdministration.Interfaces
 	    /// </summary>
 		public interface IRuleAdministrator
 		{
+			void ApplyAction<T>(GameObject obj) where T:new();
+			void ApplyAction(GameObject obj, IAction action);
 
-			void ApplyRules(/* coral, board cell */);
+			void ApplyActionGlobal<T>() where T:new();
+			void ApplyActionGlobal(IAction action);
 
+			void RegisterRule(string type, /*string category,*/ IAction rule);
 		}
 }
 
