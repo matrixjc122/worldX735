@@ -63,6 +63,7 @@
      <Compile Include="Assets\Scripts\MoveCamera.cs" />
      <Compile Include="Assets\Scripts\MoveCameraXZ.cs" />
      <Compile Include="Assets\Scripts\MoveListenerXZ.cs" />
+     <Compile Include="Assets\Scripts\ParticleColor.cs" />
      <Compile Include="Assets\UI\UIMain.cs" />
      <None Include="Assets\shader\ItemGlow.shader" />
  <Reference Include="UnityEngine.UI">

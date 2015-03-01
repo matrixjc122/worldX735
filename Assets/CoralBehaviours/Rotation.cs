@@ -31,7 +31,7 @@ public class Rotation : Base {
 					Random.Range (0.90f, 0.995f) * transforms [i].localScale.z);
 
 			//POSITION
-			if (transforms [i].gameObject.name == "B" || transforms [i].gameObject.name == "C") {
+			if (transforms [i].gameObject.name == "A" || transforms [i].gameObject.name == "B" || transforms [i].gameObject.name == "C") {
 				transforms [i].localPosition = new Vector3 (
 					Random.Range (-0.1f, 0.1f) + transforms [i].localPosition.x,
 					Random.Range (-0.1f, 0.1f) + transforms [i].localPosition.y,
