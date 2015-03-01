@@ -27,6 +27,7 @@ public  class worldXSingelton
 		GameObject zombi = GameObject.Instantiate (Resources.Load (typeName)) as GameObject;
 		zombi.GetComponent<Common>().FigureType = typeName;
 		zombi.GetComponent<Common>().FigureWillpower = 1.0f;
+		zombi.name = "zombi-" + typeName;
 		zombi.SetActive(false); // mark it as zombi
 		ZombiDict.Add (typeName, zombi);
 		ZombiKnownTypes = ZombiDict.Keys;
@@ -65,6 +66,7 @@ public  class worldXSingelton
 	{
 		GameObject go = GameObject.Instantiate (ZombiDict [key], positon, rotation) as GameObject;
 		go.GetComponent<Common> ().InitBy (ZombiDict [key].GetComponent<Common>());
+		go.name = key;
 		return go;
 	}
 
