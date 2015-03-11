@@ -6,7 +6,7 @@ public class MoveCameraXZ : MonoBehaviour {
 	public float dragSpeed = 25;
 	void Start()
 	{	
-		camera.orthographicSize = 5;
+		GetComponent<Camera>().orthographicSize = 5;
 		transform.rotation = Quaternion.Euler(45, 315, 0);
 		transform.position = new Vector3 (7, 10, -7);
 	}
@@ -23,11 +23,11 @@ public class MoveCameraXZ : MonoBehaviour {
 
 		// ==ZOOM/ORTHOGRAPHIC SIZE
 		if (Input.GetKeyDown ("down")) {
-			camera.orthographicSize += 0.25f;
+			GetComponent<Camera>().orthographicSize += 0.25f;
 		}
 		
 		if (Input.GetKeyDown ("up")) {
-			camera.orthographicSize -= 0.25f;
+			GetComponent<Camera>().orthographicSize -= 0.25f;
 		}
 
 		transform.position = new Vector3 (transform.position.x,
