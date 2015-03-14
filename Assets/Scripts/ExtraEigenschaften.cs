@@ -14,9 +14,9 @@ void Start() {
 	_renderers = gameObject.GetComponentsInChildren<Renderer> ();
 
 	//generate random colors
-	float r = Random.value;
-	float g = Random.value;
-	float b = Random.value;
+	float r = Random.Range (0.5f,1.5f);
+	float g = Random.Range (0.5f,1.5f);
+	float b = Random.Range (0.5f,1.5f);
 	
 	//assign color to objects
 	for ( int x = 0; x < _renderers.Length; x++ ) {
