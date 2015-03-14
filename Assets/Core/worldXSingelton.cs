@@ -24,6 +24,8 @@ public  class worldXSingelton
 	// *---------------- STATIC
 	public static void LoadZombiPrefab(string typeName)
 	{
+		
+	
 		GameObject zombi = GameObject.Instantiate (Resources.Load (typeName)) as GameObject;
 		zombi.GetComponent<Common>().FigureType = typeName;
 		zombi.GetComponent<Common>().FigureWillpower = 1.0f;
@@ -31,6 +33,19 @@ public  class worldXSingelton
 		zombi.SetActive(false); // mark it as zombi
 		ZombiDict.Add (typeName, zombi);
 		ZombiKnownTypes = ZombiDict.Keys;
+		switch(typeName)
+		{
+		case "A":
+			zombi.GetComponent<Common>().FigureWeight = 0.40f;
+			break;
+		case "B":
+			zombi.GetComponent<Common>().FigureWeight = 0.10f;
+			break;
+		case "C":
+			zombi.GetComponent<Common>().FigureWeight = 0.01f;
+			break;
+			
+		}
 	}
 
 	public static void StaticInitialisation(Vector2 worldSize)

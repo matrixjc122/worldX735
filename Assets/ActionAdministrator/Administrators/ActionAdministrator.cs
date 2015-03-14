@@ -90,10 +90,13 @@ namespace RuleAdministration.Administrators
 			{
 				// do some global update (e.g. change intensities
 				
-			GameObject[] arr = new GameObject[(int)worldXSingelton.WorldSize.x * (int)worldXSingelton.WorldSize.y];
-			Buffer.BlockCopy (worldXSingelton.WorldObjects, 0, arr, 0, (int)worldXSingelton.WorldSize.x * (int)worldXSingelton.WorldSize.y);
+			List<GameObject> arr = new List<GameObject>();
+			foreach( GameObject obj in worldXSingelton.WorldObjects )
+			{
+				arr.Add(obj);
+			}
 				
-			this.ApplyAction(action,arr);
+			this.ApplyAction(action,arr.ToArray());
 				
 			}
 		

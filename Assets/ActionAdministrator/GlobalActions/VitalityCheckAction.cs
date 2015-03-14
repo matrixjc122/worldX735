@@ -11,39 +11,39 @@ public class VitalityCheckAction : IAction {
 	public bool IsApplicable (params GameObject[] list)
 	{
 		bool status = true;
-		
-		foreach (GameObject obj in list) {
-			Common obj_common = obj.GetComponent<Common> ();
-			if (obj_common == null) { 
-				Debug.LogError ("The passed object is not placable. It doesn't contain a Common behaviour.");
-				return false;
-			}					
-			
-			//status &= CheckEnvironment (obj.GetComponent<Common> ().FigurePosition, m_TypeName);
-		}
 		return status;
 	}
 
 	public bool Update (params GameObject[] list)
 	{
+		
 		foreach (GameObject obj in list) 
 		{
-			switch(obj.GetComponent<Common>().FigureType)
+		
+			float val = Random.Range(0.0f,1.0f);
+			if(val <= 0.1f)
 			{
-			case "A": 
-			{
-				ExpandAction upgrade = new ExpandAction();
-				upgrade.SetTypeName("B");
-				ActionAdministrator.Instance.ApplyAction(upgrade,obj);
-			}
-				break;
-			case "B":
-			{
-				ExpandAction upgrade = new ExpandAction();
-				upgrade.SetTypeName("C");
-				ActionAdministrator.Instance.ApplyAction(upgrade,obj);
-			}
-				break;
+				ExpandAction kill = new ExpandAction();
+				kill.SetTypeName("Boden");
+				ActionAdministrator.Instance.ApplyAction(kill,obj);
+			}else if(val > 0.75f ) {
+				switch(obj.GetComponent<Common>().FigureType)
+				{
+				case "A": 
+				{
+					ExpandAction upgrade = new ExpandAction();
+					upgrade.SetTypeName("B");
+					ActionAdministrator.Instance.ApplyAction(upgrade,obj);
+				}
+					break;
+				case "B":
+				{
+					ExpandAction upgrade = new ExpandAction();
+					upgrade.SetTypeName("C");
+					ActionAdministrator.Instance.ApplyAction(upgrade,obj);
+				}
+					break;
+				}
 			}
 		}
 		return true;
@@ -51,7 +51,7 @@ public class VitalityCheckAction : IAction {
 
 	public string Name ()
 	{
-		throw new System.NotImplementedException ();
+		return "VitalityAction";
 	}
 
 	public void BeforeUpdate (params GameObject[] list)

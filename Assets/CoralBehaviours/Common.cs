@@ -13,7 +13,8 @@ public class Common : Base {
 	public override void InitBy(Base other){
 		this.FigurePosition = ((Common)other).FigurePosition;
 		this.FigureType = ((Common)other).FigureType;
-		this.FigureWillpower = ((Common)other).FigureWillpower;;
+		this.FigureWillpower = ((Common)other).FigureWillpower;
+		this.FigureWeight =((Common)other).FigureWeight;
 	}	
 	
 	/// <summary>
@@ -35,11 +36,17 @@ public class Common : Base {
 	public virtual float FigureWillpower{set;get;}
 	
 	/// <summary>
+	/// Gets or sets the figure weight.
+	/// </summary>
+	/// <value>The figure weight.</value>
+	public virtual float FigureWeight{set; get;}
+	
+	/// <summary>
 	/// Raises the mouse down event.
 	/// </summary>
 	public virtual void OnMouseDown() {
 
 		ActionAdministrator.Instance.ApplyAction <ExpandAction>(gameObject);
-
+		ActionAdministrator.Instance.ApplyActionGlobal <VitalityCheckAction>();
 	}
 }	 

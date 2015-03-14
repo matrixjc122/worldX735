@@ -21,7 +21,7 @@ public class worldXMain : MonoBehaviour {
 		worldXSingelton.LoadZombiPrefab ("A");
 		worldXSingelton.LoadZombiPrefab ("B");
 		worldXSingelton.LoadZombiPrefab ("C");
-
+		
 
 		this.InitializeWorld ();
 
@@ -29,6 +29,7 @@ public class worldXMain : MonoBehaviour {
 	
 	void InitializeWorld()
 	{
+	
 
 		GameObject[,] objects = worldXSingelton.WorldObjects;
 		for (int x = 0; x < objects.GetLength(0); x++) 
