@@ -32,7 +32,7 @@ public class MoveCamera : MonoBehaviour
 	{
 		// Setup camera physics properties
 		gameObject.AddComponent<Rigidbody>();
-		rigidbody.useGravity = false;
+		GetComponent<Rigidbody>().useGravity = false;
 	}
 	
 	//
@@ -97,10 +97,10 @@ public class MoveCamera : MonoBehaviour
 			move = forwardRotation * move;
 			
 			// Set Drag
-			rigidbody.drag = panDrag;
+			GetComponent<Rigidbody>().drag = panDrag;
 			
 			// Pan
-			rigidbody.AddForce(move, ForceMode.Acceleration);
+			GetComponent<Rigidbody>().AddForce(move, ForceMode.Acceleration);
 		}
 		
 		// Move the camera linearly along Z axis
@@ -111,10 +111,10 @@ public class MoveCamera : MonoBehaviour
 			Vector3 move = pos.y * zoomSpeed * transform.forward; 
 			
 			// Set Drag
-			rigidbody.drag = zoomDrag;
+			GetComponent<Rigidbody>().drag = zoomDrag;
 			
 			// Zoom
-			rigidbody.AddForce(move, ForceMode.Acceleration);
+			GetComponent<Rigidbody>().AddForce(move, ForceMode.Acceleration);
 		}
 	}
 	

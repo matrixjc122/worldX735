@@ -18,22 +18,34 @@ public  class worldXSingelton
 
 	public static string UISelectedType{ set; get;}
 	public static bool UIOnly{ set; get;}
+	public static bool UIAction{ set; get;}
 	
 
 	// *---------------- STATIC
 	public static void LoadZombiPrefab(string typeName)
 	{
-
-
-		GameObject zombi = GameObject.Instantiate (Resources.Load (typeName)) as GameObject;
-
-		zombi.GetComponent<Common>().FigureType = typeName;
-		zombi.SetActive(false); // mark it as zombi
 		
+	
+		GameObject zombi = GameObject.Instantiate (Resources.Load (typeName)) as GameObject;
+		zombi.GetComponent<Common>().FigureType = typeName;
+		zombi.GetComponent<Common>().FigureWillpower = 1.0f;
+		zombi.name = "zombi-" + typeName;
+		zombi.SetActive(false); // mark it as zombi
 		ZombiDict.Add (typeName, zombi);
-
 		ZombiKnownTypes = ZombiDict.Keys;
-
+		switch(typeName)
+		{
+		case "A":
+			zombi.GetComponent<Common>().FigureWeight = 0.40f;
+			break;
+		case "B":
+			zombi.GetComponent<Common>().FigureWeight = 0.10f;
+			break;
+		case "C":
+			zombi.GetComponent<Common>().FigureWeight = 0.01f;
+			break;
+			
+		}
 	}
 
 	public static void StaticInitialisation(Vector2 worldSize)
@@ -69,9 +81,18 @@ public  class worldXSingelton
 	{
 		GameObject go = GameObject.Instantiate (ZombiDict [key], positon, rotation) as GameObject;
 		go.GetComponent<Common> ().InitBy (ZombiDict [key].GetComponent<Common>());
+		go.name = key;
 		return go;
 	}
 
 
-
+	public static Dictionary<string,int> CreateEmptyTypeDictionary()
+	{
+		Dictionary<string, int> output = new Dictionary<string, int > ();
+		
+		foreach(string key in worldXSingelton.ZombiKnownTypes)
+			output.Add(key,0);
+		
+		return output;
+	}
 }

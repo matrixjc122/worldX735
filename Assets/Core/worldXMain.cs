@@ -2,8 +2,13 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using RuleAdministration.Administrators;
+using RuleAdministration.Rules;
 
 public class worldXMain : MonoBehaviour {
+
+	public string[] rules; 
+
 	
 	// Use this for initialization
 	void Start () {
@@ -16,7 +21,7 @@ public class worldXMain : MonoBehaviour {
 		worldXSingelton.LoadZombiPrefab ("A");
 		worldXSingelton.LoadZombiPrefab ("B");
 		worldXSingelton.LoadZombiPrefab ("C");
-
+		
 
 		this.InitializeWorld ();
 
@@ -24,6 +29,7 @@ public class worldXMain : MonoBehaviour {
 	
 	void InitializeWorld()
 	{
+	
 
 		GameObject[,] objects = worldXSingelton.WorldObjects;
 		for (int x = 0; x < objects.GetLength(0); x++) 
