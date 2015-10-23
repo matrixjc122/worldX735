@@ -12,6 +12,7 @@ using RuleAdministration.Interfaces;
 using UnityEngine;
 using System.Collections.Generic;
 using RuleAdministration.Administrators;
+using System.Collections;
 	
 namespace RuleAdministration.Rules
 {
@@ -63,8 +64,9 @@ namespace RuleAdministration.Rules
 			return "ExpandAction";
 		}
 			
-		public bool Update (params GameObject[] list)
+		public void Update (params GameObject[] list)
 		{
+			
 			foreach (GameObject obj in list) {
 				GameObject spawnObject = worldXSingelton.CloneZombiPrefab (m_TypeName, obj.transform.position, Quaternion.identity);
 				spawnObject.GetComponent<Common> ().FigurePosition = obj.GetComponent<Common> ().FigurePosition;
@@ -78,7 +80,6 @@ namespace RuleAdministration.Rules
 				GameObject.Destroy (obj);
 			}
 			
-			return true;
 		}
 
 		public void BeforeUpdate (params GameObject[] list)

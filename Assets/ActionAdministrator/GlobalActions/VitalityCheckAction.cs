@@ -14,39 +14,17 @@ public class VitalityCheckAction : IAction {
 		return status;
 	}
 
-	public bool Update (params GameObject[] list)
+	public void Update (params GameObject[] list)
 	{
 		
-		foreach (GameObject obj in list) 
-		{
+//		foreach (GameObject obj in list) 
+//		{
+//			
+//			obj.GetComponent<Common>().StartChildCoroutine(KillOrUpgradeAndWait(obj,1.5f));
+//			
+//		}
 		
-			float val = Random.Range(0.0f,1.0f);
-			if(val <= 0.1f)
-			{
-				ExpandAction kill = new ExpandAction();
-				kill.SetTypeName("Boden");
-				ActionAdministrator.Instance.ApplyAction(kill,obj);
-			}else if(val > 0.75f ) {
-				switch(obj.GetComponent<Common>().FigureType)
-				{
-				case "A": 
-				{
-					ExpandAction upgrade = new ExpandAction();
-					upgrade.SetTypeName("B");
-					ActionAdministrator.Instance.ApplyAction(upgrade,obj);
-				}
-					break;
-				case "B":
-				{
-					ExpandAction upgrade = new ExpandAction();
-					upgrade.SetTypeName("C");
-					ActionAdministrator.Instance.ApplyAction(upgrade,obj);
-				}
-					break;
-				}
-			}
-		}
-		return true;
+		
 	}
 
 	public string Name ()
@@ -57,6 +35,36 @@ public class VitalityCheckAction : IAction {
 	public void BeforeUpdate (params GameObject[] list)
 	{
 
+	}
+	
+	public IEnumerator KillOrUpgradeAndWait(GameObject obj, float time)
+	{
+		float val = Random.Range(0.0f,1.0f);
+		if(val <= 0.05f)
+		{
+			ExpandAction kill = new ExpandAction();
+			kill.SetTypeName("Boden");
+			ActionAdministrator.Instance.ApplyAction(kill,obj);
+		}else if(val > 0.75f ) {
+			switch(obj.GetComponent<Common>().FigureType)
+			{
+			case "A": 
+			{
+				ExpandAction upgrade = new ExpandAction();
+				upgrade.SetTypeName("B");
+				ActionAdministrator.Instance.ApplyAction(upgrade,obj);
+			}
+				break;
+			case "B":
+			{
+				ExpandAction upgrade = new ExpandAction();
+				upgrade.SetTypeName("C");
+				ActionAdministrator.Instance.ApplyAction(upgrade,obj);
+			}
+				break;
+			}
+		}
+		yield return new WaitForSeconds(time);
 	}
 	
 	#endregion

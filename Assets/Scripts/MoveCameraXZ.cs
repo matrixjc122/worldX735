@@ -10,6 +10,8 @@ public class MoveCameraXZ : MonoBehaviour {
 		transform.rotation = Quaternion.Euler(45, 315, 0);
 		transform.position = new Vector3 (7, 10, -7);
 	}
+	
+	
 	void Update()
 	{
 

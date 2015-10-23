@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 using System;
 using UnityEngine;
+using System.Collections;
 
 
 namespace RuleAdministration.Interfaces
@@ -30,7 +31,7 @@ namespace RuleAdministration.Interfaces
 		/// </summary>
 		/// <returns><c>true</c>, if action was processed, <c>false</c> otherwise.</returns>
 		/// <param name="obj">Object.</param>
-		bool Update(params GameObject[] list);
+		void Update(params GameObject[] list);
 
 		/// <summary>
 		/// Do some action state changes. E.g. if a action have to do some calculations.

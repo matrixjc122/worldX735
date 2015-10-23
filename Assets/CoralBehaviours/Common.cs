@@ -17,6 +17,11 @@ public class Common : Base {
 		this.FigureWeight =((Common)other).FigureWeight;
 	}	
 	
+	public virtual void StartChildCoroutine(IEnumerator coroutineMethod)
+	{
+		StartCoroutine(coroutineMethod);
+	}
+	
 	/// <summary>
 	/// Gets or sets the type of the figure.
 	/// </summary>

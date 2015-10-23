@@ -13,13 +13,13 @@ public class MoveCamera : MonoBehaviour
 	
 	public float turnSpeed = 35.0f;			// Speed of camera turning when mouse moves in along an axis
 	public float panSpeed = 360.0f;			// Speed of the camera when being panned
-	public float zoomSpeed = 500.0f;		// Speed of the camera going back and forth
+	public float zoomSpeed = 0.1f;		// Speed of the camera going back and forth
 	
 	public float turnDrag = 5.0f;			// RigidBody Drag when rotating camera
 	public float panDrag = 3.5f;			// RigidBody Drag when panning camera
 	public float zoomDrag = 3.3f;			// RigidBody Drag when zooming camera
 	
-	private Vector3 mouseOrigin;			// Position of cursor when mouse dragging starts
+	private Vector3 mouseOrigin;			// Position of cursor when mouse dragging startss
 	private bool isPanning;				// Is the camera being panned?
 	private bool isRotating;			// Is the camera being rotated?
 	private bool isZooming;				// Is the camera zooming?
@@ -43,13 +43,16 @@ public class MoveCamera : MonoBehaviour
 	{
 		// == Getting Input ==
 		
+		
 		// Get the left mouse button
 		if(Input.GetMouseButtonDown(0))
 		{
 			// Get mouse origin
 			mouseOrigin = Input.mousePosition;
-			isRotating = false;
+			isRotating = true;
+			Debug.Log("Found 0");	
 		}
+		
 		
 		// Get the right mouse button
 		if(Input.GetMouseButtonDown(1))
@@ -57,7 +60,9 @@ public class MoveCamera : MonoBehaviour
 			// Get mouse origin
 			mouseOrigin = Input.mousePosition;
 			isPanning = true;
+			Debug.Log("Found 1");	
 		}
+		
 		
 		// Get the middle mouse button
 		if(Input.GetMouseButtonDown(2))
@@ -65,6 +70,8 @@ public class MoveCamera : MonoBehaviour
 			// Get mouse origin
 			mouseOrigin = Input.mousePosition;
 			isZooming = true;
+			
+			Debug.Log("Found 2");	
 		}
 		
 		
@@ -108,13 +115,13 @@ public class MoveCamera : MonoBehaviour
 		{
 			// Get mouse displacement vector from original to current position
 			Vector3 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition - mouseOrigin);
-			Vector3 move = pos.y * zoomSpeed * transform.forward; 
 			
-			// Set Drag
-			GetComponent<Rigidbody>().drag = zoomDrag;
+			if(pos.y < 0)
+				GetComponent<Camera>().orthographicSize +=  pos.sqrMagnitude*zoomSpeed;
+			if(pos.y > 0)
+				GetComponent<Camera>().orthographicSize -=  pos.sqrMagnitude*zoomSpeed;
+			mouseOrigin = Input.mousePosition;
 			
-			// Zoom
-			GetComponent<Rigidbody>().AddForce(move, ForceMode.Acceleration);
 		}
 	}
 	

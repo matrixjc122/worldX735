@@ -118,10 +118,10 @@ namespace RuleAdministration.Administrators
 			bool state = true;
 			state &= action.IsApplicable (list);
 			if(state) {
-				state &= action.Update (list);
+				action.Update (list);
 				
 				//--------------------------------
-				Debug.Log(action.Name () + " Processed " + state);
+				Debug.Log(action.Name () + " Processed");
 				//--------------------------------
 				
 			} else {

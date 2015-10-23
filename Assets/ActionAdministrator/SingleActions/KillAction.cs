@@ -12,6 +12,7 @@ using RuleAdministration.Interfaces;
 using UnityEngine;
 using System.Collections.Generic;
 using RuleAdministration.Administrators;
+using System.Collections;
 
 namespace RuleAdministration.Rules
 {
@@ -33,9 +34,9 @@ namespace RuleAdministration.Rules
 			return "KillAction";
 		}
 		
-		public bool Update (params GameObject[] list)
+		public void Update (params GameObject[] list)
 		{
-			return true;
+			
 		}
 		
 		public void BeforeUpdate (params GameObject[] list)
