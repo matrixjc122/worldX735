@@ -15,7 +15,7 @@ public class worldXMain : MonoBehaviour {
 
 		// Game setup
 
-		worldXSingelton.StaticInitialisation (new Vector2 (50, 50) );
+		worldXSingelton.StaticInitialisation (new Vector2 (20, 20) );
 
 		worldXSingelton.LoadZombiPrefab ("Boden");
 		worldXSingelton.LoadZombiPrefab ("A");
@@ -31,7 +31,7 @@ public class worldXMain : MonoBehaviour {
 	{
 	
 
-		GameObject[,] objects = worldXSingelton.WorldObjects;
+		Common[,] objects = worldXSingelton.WorldObjects;
 		for (int x = 0; x < objects.GetLength(0); x++) 
 		{
 			for (int y = 0; y < objects.GetLength(1); y++) 
@@ -51,7 +51,7 @@ public class worldXMain : MonoBehaviour {
 
 
 				objects[x,y].GetComponent<Common>().FigurePosition = new Vector2(x,y);
-				objects[x,y].SetActive(true);
+				objects[x,y].gameObject.SetActive(true);
 			}
 		}
 

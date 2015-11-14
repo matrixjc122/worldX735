@@ -24,7 +24,7 @@ namespace RuleAdministration.Interfaces
 		/// </summary>
 		/// <param name="obj">Object.</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		void ApplyAction<T>(params GameObject[] obj) where T:new();
+		void ApplyAction<T>(params Common[] obj) where T:new();
 
 		/// <summary>
 		/// Applies the action to the GameObject. This process contains
@@ -34,7 +34,7 @@ namespace RuleAdministration.Interfaces
 		/// </summary>
 		/// <param name="obj">Object.</param>
 		/// <param name="action">Action.</param>
-		void ApplyAction(IAction action, params GameObject[]  obj);
+		void ApplyAction(IAction action, params Common[]  obj);
 
 		/// <summary>
 		/// Applies the action global. See ApplyAction<T>(). Forward to

@@ -9,7 +9,7 @@ using System.Diagnostics;
 public  class worldXSingelton
 {
 	private static worldXSingelton instance_private;
-	public static GameObject[,] WorldObjects{ set;get;}
+	public static Common[,] WorldObjects{ set;get;}
 
 	public static Vector2 WorldSize{ set; get;}
 
@@ -52,7 +52,7 @@ public  class worldXSingelton
 	{
 		instance_private = new worldXSingelton();
 		WorldSize = worldSize;
-		WorldObjects = new GameObject[(int)worldXSingelton.WorldSize.x, (int)worldXSingelton.WorldSize.y];
+		WorldObjects = new Common[(int)worldXSingelton.WorldSize.x, (int)worldXSingelton.WorldSize.y];
 		ZombiDict = new Dictionary<string, GameObject>();
 		UISelectedType = "A";
 	}
@@ -72,17 +72,17 @@ public  class worldXSingelton
 
 	//	*---------------- REFACTORED
 
-	public static GameObject CloneZombiPrefab(string key)
+	public static Common CloneZombiPrefab(string key)
 	{
-		return CloneZombiPrefab (key, new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0));
+		return CloneZombiPrefab (key, new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0)).GetComponent<Common>();
 	}
 	
-	public static GameObject CloneZombiPrefab(string key, Vector3 positon, Quaternion rotation)
+	public static Common CloneZombiPrefab(string key, Vector3 positon, Quaternion rotation)
 	{
 		GameObject go = GameObject.Instantiate (ZombiDict [key], positon, rotation) as GameObject;
-		go.GetComponent<Common> ().InitBy (ZombiDict [key].GetComponent<Common>());
+		go.GetComponent<Common>().InitBy (ZombiDict [key].GetComponent<Common>());
 		go.name = key;
-		return go;
+		return go.GetComponent<Common>();
 	}
 
 

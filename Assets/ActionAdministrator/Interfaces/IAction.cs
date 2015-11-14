@@ -16,13 +16,16 @@ namespace RuleAdministration.Interfaces
 {
 	public interface IAction
 	{
+	
+		Common CurrentObject{get; set;}
+	
 		/// <summary>
 		/// Determines whether this instance is applicable the specified obj.
 		/// </summary>
 		/// <returns><c>true</c> if this instance is appli-
 		/// cable the specified obj; otherwise, <c>false</c>.</returns>
 		/// <param name="obj">Object.</param>
-		bool IsApplicable(params GameObject[]  list);
+		bool IsApplicable();
 
 		/// <summary>
 		/// Processes the action. In this function concret 
@@ -31,13 +34,13 @@ namespace RuleAdministration.Interfaces
 		/// </summary>
 		/// <returns><c>true</c>, if action was processed, <c>false</c> otherwise.</returns>
 		/// <param name="obj">Object.</param>
-		void Update(params GameObject[] list);
+		void Update();
 
 		/// <summary>
 		/// Do some action state changes. E.g. if a action have to do some calculations.
 		/// Otherwise create a empty method;
 		/// </summary>
-		void BeforeUpdate(params GameObject[] list);
+		void BeforeUpdate();
 
 		/// <summary>
 		/// Name of the action.

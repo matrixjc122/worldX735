@@ -50,7 +50,6 @@ public class MoveCamera : MonoBehaviour
 			// Get mouse origin
 			mouseOrigin = Input.mousePosition;
 			isRotating = true;
-			Debug.Log("Found 0");	
 		}
 		
 		
@@ -60,7 +59,6 @@ public class MoveCamera : MonoBehaviour
 			// Get mouse origin
 			mouseOrigin = Input.mousePosition;
 			isPanning = true;
-			Debug.Log("Found 1");	
 		}
 		
 		
@@ -70,8 +68,6 @@ public class MoveCamera : MonoBehaviour
 			// Get mouse origin
 			mouseOrigin = Input.mousePosition;
 			isZooming = true;
-			
-			Debug.Log("Found 2");	
 		}
 		
 		

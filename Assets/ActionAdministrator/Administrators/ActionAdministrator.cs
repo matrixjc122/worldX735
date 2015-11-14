@@ -11,6 +11,7 @@ using System;
 using RuleAdministration.Interfaces;
 using System.Collections.Generic;
 using UnityEngine;
+using RuleAdministration.Rules;
 
 namespace RuleAdministration.Administrators
 {       
@@ -90,8 +91,8 @@ namespace RuleAdministration.Administrators
 			{
 				// do some global update (e.g. change intensities
 				
-			List<GameObject> arr = new List<GameObject>();
-			foreach( GameObject obj in worldXSingelton.WorldObjects )
+			List<Common> arr = new List<Common>();
+			foreach( Common obj in worldXSingelton.WorldObjects )
 			{
 				arr.Add(obj);
 			}
@@ -99,10 +100,7 @@ namespace RuleAdministration.Administrators
 			this.ApplyAction(action,arr.ToArray());
 				
 			}
-		
-  			/// <summary>
-			/// Initializes a new instance of the <see cref="RuleAdministration.Administrators.CoralRuleAdministrator"/> class.
-			/// </summary>
+			
 			private ActionAdministrator ()
 			:base()
 			{
@@ -110,38 +108,100 @@ namespace RuleAdministration.Administrators
 			TriggerEventActionList = new List<IRepeatableAction> ();
 			}
 
+		public void ApplyRandomAccessAction<T> (params Common[] list) where T:new()
+		{
+			ApplyRandomAccessAction(new T() as IAction, list);
+		}
 			
+		public void ApplyRandomAccessAction (IAction action, params Common[] objects)
+		{
+			System.Random rng = new System.Random();
+			
+			LocalRandomSelectionAction raa = new LocalRandomSelectionAction();
+			raa.SingleAction = action;
+			raa.CurrentObject = objects[0];
+			raa.Radius = 1;
+			
+			Common[] list = raa.GetRandomObjects(rng);
+			
+			ApplyAction(action, list);
+		}
 	
-		public void ApplyAction (IAction action, params GameObject[] list)
+		public void ApplyAction (IAction action, params Common[] list)
 			{
 
-			bool state = true;
-			state &= action.IsApplicable (list);
-			if(state) {
-				action.Update (list);
+			foreach(Common obj in list)
+			{
+				action.CurrentObject = obj;
 				
-				//--------------------------------
-				Debug.Log(action.Name () + " Processed");
-				//--------------------------------
+				if(action.IsApplicable() == true) {
+					action.BeforeUpdate();
+					action.Update();
+					
+					//--------------------------------
+					Debug.Log(action.Name () + " Processed");
+					//--------------------------------
+					
+				} else {
+					//--------------------------------
+					Debug.Log(action.Name () + " is not applicable!");
+					//--------------------------------
+					
+				}	
+			}
+		}
 				
-			} else {
-				//--------------------------------
-				Debug.Log(action.Name () + " is not applicable!");
-				//--------------------------------
-				
-			}	
+		public void ApplyAction<T> (params Common[] current) where T:new()
+		{
+			ApplyAction(new T() as IAction, current);
 		}
 		
-		
-		
-		/// <summary>
-		/// Applies the rules. 
-		/// </summary>
-				
-				public void ApplyAction<T> (params GameObject[] current) where T:new()
+		public void ApplyActionAtNeighbors<T>(Vector2 center_pos, bool [,] Neighborhood) where T:new()
+		{
+			for (int x =0; x < Neighborhood.GetLength(0); x++) 
+			{
+				for (int y =0; y < Neighborhood.GetLength(1); y++) 
 				{
-					ApplyAction(new T() as IAction, current);
-				}
+					if(Neighborhood[x,y] == true)
+					{
+						int width = worldXSingelton.WorldObjects.GetLength(0);
+						int height = worldXSingelton.WorldObjects.GetLength(1);
+						int world_width = worldXSingelton.WorldObjects.GetLength(0);
+						int world_height = worldXSingelton.WorldObjects.GetLength(1);
+						
+						//go to upper left corner of the mask array relative to current pos_self
+						Vector2 pos_local = center_pos + new Vector2(-1,-1);
+						
+						pos_local.x += x;
+						pos_local.y += y;
+						
+						
+						if(pos_local.x < 0)
+						{
+							//						Debug.Log(pos_ul.x + x);
+							continue;
+						}
+						if(pos_local.x >= width && pos_local.x >= world_width)
+						{
+							//						Debug.Log(pos_ul.x + x);
+							continue;
+						}
+						if(pos_local.y < 0)
+						{
+							//						Debug.Log(pos_ul.y + y);
+							continue;
+						}
+						if(pos_local.y >= height && pos_local.y >= world_height)
+						{
+							//						Debug.Log(pos_ul.y + y);
+							continue;
+						}
+						
+						ApplyAction(new T() as IAction, worldXSingelton.WorldObjects[(int)pos_local.x,(int)pos_local.y]);
+					}
+				}			
+			}
+		}
 				
 		}
 }

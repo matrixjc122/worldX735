@@ -6,6 +6,7 @@ using RuleAdministration.Rules;
 
 public class Common : Base {
 
+
 	/// <summary>
 	/// Inits this instance by other.
 	/// </summary>
@@ -51,7 +52,13 @@ public class Common : Base {
 	/// </summary>
 	public virtual void OnMouseDown() {
 
-		ActionAdministrator.Instance.ApplyAction <ExpandAction>(gameObject);
-		ActionAdministrator.Instance.ApplyActionGlobal <VitalityCheckAction>();
+		if(gameObject.GetComponent<Common> ().FigureType == worldXSingelton.UISelectedType)
+			ActionAdministrator.Instance.ApplyAction <SARandomTransform>(gameObject.GetComponent<Common> ());
+		else
+			ActionAdministrator.Instance.ApplyAction <SAExpand>(gameObject.GetComponent<Common> ());
+
+		ActionAdministrator.Instance.ApplyRandomAccessAction<CAEvolutionise>(gameObject.GetComponent<Common> ());
+				
+		//ActionAdministrator.Instance.ApplyActionGlobal <VitalityCheckAction>();
 	}
 }	 
