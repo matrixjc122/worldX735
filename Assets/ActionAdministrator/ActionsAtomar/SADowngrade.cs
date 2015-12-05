@@ -19,44 +19,16 @@ namespace RuleAdministration.Rules
 	public class SADowngrade : IAction
 	{
 			
-		private SAExpand m_expand;
-		
-		public SADowngrade ()
-		{
-		}
-		
-		 
-		public Common CurrentObject{get;set;}	
-		public void SetObject(Common obj)
-		{
-			CurrentObject = obj;
-			m_expand = new SAExpand();
-			m_expand.SetObject(CurrentObject);
-		}
-		
-		public bool IsApplicable ()
-		{
-			return m_expand.IsApplicable();
-		}
-			
-		public string Name ()
+		public override string Name ()
 		{
 			return "Downgrade";
 		}
 			
-		public void Update ()
+		public override void Update ()
 		{
-			
-			ActionAdministrator.Instance.ApplyAction (m_expand, CurrentObject);
-						
-		}
-
-		public void BeforeUpdate ()
-		{
-			
 			string new_type = "Boden";
 			// Get previouse 
-			switch (CurrentObject.FigureType) {
+			switch (Tile.Pal.Base().Type) {
 			case "C":
 				new_type = "B";
 				break;
@@ -67,10 +39,11 @@ namespace RuleAdministration.Rules
 				new_type = "Boden";
 				break;
 			}
-			m_expand.SetTypeName (new_type);
-		}
-			
+			SAExpand expandAction = new SAExpand();
+			expandAction.SetTypeName (new_type);
+			ActionAdministrator.Instance.ApplyAction (expandAction, Tile);
 		
+		}
 		
 	}
 }

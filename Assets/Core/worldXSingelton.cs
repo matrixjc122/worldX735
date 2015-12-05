@@ -9,7 +9,9 @@ using System.Diagnostics;
 public  class worldXSingelton
 {
 	private static worldXSingelton instance_private;
-	public static Common[,] WorldObjects{ set;get;}
+	public static Base[,] Layer2Objects{ set;get;}
+	public static Base[,] Layer4Nutrients{ set;get;}
+	public static Base[,] Layer3Floor{ set;get;}
 
 	public static Vector2 WorldSize{ set; get;}
 
@@ -20,39 +22,43 @@ public  class worldXSingelton
 	public static bool UIOnly{ set; get;}
 	public static bool UIAction{ set; get;}
 	
+	public static Base Generic(GameObject obj)
+	{
+		if(obj.GetComponent<Base>() != null)
+			return obj.GetComponent<Base>();
+			
+			
+		if(obj.GetComponent<Pal>() != null)
+			return obj.GetComponent<Pal>().Base();
+			
+			
+		if(obj.GetComponent<Nutrients>() != null) 
+			return obj.GetComponent<Nutrients>().Base();
+		
+				
+		if(obj.GetComponent<Floor>() != null)
+			return obj.GetComponent<Floor>().Base();
+			
+		return null;
+	}
 
 	// *---------------- STATIC
 	public static void LoadZombiPrefab(string typeName)
 	{
-		
-	
 		GameObject zombi = GameObject.Instantiate (Resources.Load (typeName)) as GameObject;
-		zombi.GetComponent<Common>().FigureType = typeName;
-		zombi.GetComponent<Common>().FigureWillpower = 1.0f;
 		zombi.name = "zombi-" + typeName;
 		zombi.SetActive(false); // mark it as zombi
 		ZombiDict.Add (typeName, zombi);
 		ZombiKnownTypes = ZombiDict.Keys;
-		switch(typeName)
-		{
-		case "A":
-			zombi.GetComponent<Common>().FigureWeight = 0.40f;
-			break;
-		case "B":
-			zombi.GetComponent<Common>().FigureWeight = 0.10f;
-			break;
-		case "C":
-			zombi.GetComponent<Common>().FigureWeight = 0.01f;
-			break;
-			
-		}
 	}
 
 	public static void StaticInitialisation(Vector2 worldSize)
 	{
 		instance_private = new worldXSingelton();
 		WorldSize = worldSize;
-		WorldObjects = new Common[(int)worldXSingelton.WorldSize.x, (int)worldXSingelton.WorldSize.y];
+		Layer2Objects = new Base[(int)worldXSingelton.WorldSize.x, (int)worldXSingelton.WorldSize.y];
+		Layer3Floor = new Base[(int)worldXSingelton.WorldSize.x, (int)worldXSingelton.WorldSize.y];
+		Layer4Nutrients = new Base[(int)worldXSingelton.WorldSize.x, (int)worldXSingelton.WorldSize.y];
 		ZombiDict = new Dictionary<string, GameObject>();
 		UISelectedType = "A";
 	}
@@ -72,17 +78,17 @@ public  class worldXSingelton
 
 	//	*---------------- REFACTORED
 
-	public static Common CloneZombiPrefab(string key)
+	public static Pal CloneZombiPrefab(string key)
 	{
-		return CloneZombiPrefab (key, new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0)).GetComponent<Common>();
+		return CloneZombiPrefab (key, new Vector3 (0, 0, 0), new Quaternion (0, 0, 0, 0)).GetComponent<Pal>();
 	}
 	
-	public static Common CloneZombiPrefab(string key, Vector3 positon, Quaternion rotation)
+	public static GameObject CloneZombiPrefab(string key, Vector3 positon, Quaternion rotation)
 	{
 		GameObject go = GameObject.Instantiate (ZombiDict [key], positon, rotation) as GameObject;
-		go.GetComponent<Common>().InitBy (ZombiDict [key].GetComponent<Common>());
+		go.GetComponent<Base>().InitBy (ZombiDict [key].GetComponent<Base>());
 		go.name = key;
-		return go.GetComponent<Common>();
+		return go;
 	}
 
 
@@ -95,4 +101,5 @@ public  class worldXSingelton
 		
 		return output;
 	}
+	
 }

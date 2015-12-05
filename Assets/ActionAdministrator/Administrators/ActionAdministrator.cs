@@ -15,42 +15,31 @@ using RuleAdministration.Rules;
 
 namespace RuleAdministration.Administrators
 {       
+	/// <summary>
+	/// Coral rule administrator.
+	/// </summary>
+	public class ActionAdministrator : IRuleAdministrator
+	{
+
+
+			
+		private static ActionAdministrator _instance = new ActionAdministrator ();
+		private Dictionary<string, Dictionary<string,IAction> > _AssociatedRules;
+		public IErrorMessage _ErrorMessage = new ErrorMessage ();
+			
+
 		/// <summary>
-		/// Coral rule administrator.
+		/// Gets the instance.
 		/// </summary>
-		public class ActionAdministrator : IRuleAdministrator
-		{
-
-		public static GameObject ActionAdministratorEmpty{ get; set;}
-
-		void Update()
-		{
-			foreach (IRepeatableAction ac in TriggerEventActionList) 
-			{
-				//this.ApplyTriggerActionGlobal();
+		/// <value>The instance.</value>
+		public static ActionAdministrator Instance {
+			get {
+				if (_instance == null) {
+					_instance = new ActionAdministrator ();
+				}
+				return _instance;
 			}
 		}
-
-		public List<IRepeatableAction> TriggerEventActionList{ set; get;}
-
-			
-				private static ActionAdministrator _instance = new ActionAdministrator ();
-				private Dictionary<string, Dictionary<string,IAction> > _AssociatedRules;
-				public IErrorMessage _ErrorMessage = new ErrorMessage ();
-			
-
-				/// <summary>
-				/// Gets the instance.
-				/// </summary>
-				/// <value>The instance.</value>
-				public static ActionAdministrator Instance {
-						get {
-								if (_instance == null) {
-										_instance = new ActionAdministrator ();
-								}
-								return _instance;
-						}
-				}
 
 //				public void RegisterRule (string type, IAction rule)
 //				{
@@ -82,127 +71,97 @@ namespace RuleAdministration.Administrators
 //		#endregion
 
 
-			public void ApplyActionGlobal<T> () where T : new()
-			{
-				ApplyActionGlobal(new T() as IAction);	
-			}
-	
-			public void ApplyActionGlobal (IAction action)
-			{
-				// do some global update (e.g. change intensities
-				
-			List<Common> arr = new List<Common>();
-			foreach( Common obj in worldXSingelton.WorldObjects )
-			{
-				arr.Add(obj);
-			}
-				
-			this.ApplyAction(action,arr.ToArray());
-				
-			}
 			
-			private ActionAdministrator ()
+		private ActionAdministrator ()
 			:base()
-			{
-			// init TriggerEventActionList
-			TriggerEventActionList = new List<IRepeatableAction> ();
-			}
-
-		public void ApplyRandomAccessAction<T> (params Common[] list) where T:new()
 		{
-			ApplyRandomAccessAction(new T() as IAction, list);
+		}
+
+		public void ApplyAction<SelectorType, ActionType> (params TileAccessor[] list) where SelectorType:new() where ActionType:new()
+		{
+			ApplyAction (new SelectorType () as ISelector, new ActionType () as IAction, list);
+		}
+		
+		public void ApplyAction<ActionType> (ISelector selector, params TileAccessor[] list) where ActionType:new()
+		{
+			ApplyAction (selector, new ActionType () as IAction, list);
 		}
 			
-		public void ApplyRandomAccessAction (IAction action, params Common[] objects)
+		public void ApplyAction (ISelector selector, IAction action, params TileAccessor[] objects)
 		{
-			System.Random rng = new System.Random();
-			
-			LocalRandomSelectionAction raa = new LocalRandomSelectionAction();
-			raa.SingleAction = action;
-			raa.CurrentObject = objects[0];
-			raa.Radius = 1;
-			
-			Common[] list = raa.GetRandomObjects(rng);
-			
-			ApplyAction(action, list);
+			// Create Random Selector
+			ApplyAction (action, selector.GetSelectedObjects ());
 		}
 	
-		public void ApplyAction (IAction action, params Common[] list)
-			{
+		public void ApplyAction (IAction action, params TileAccessor[] list)
+		{
 
-			foreach(Common obj in list)
-			{
-				action.CurrentObject = obj;
+			foreach (TileAccessor tile in list) {
+				action.Tile = tile;
 				
-				if(action.IsApplicable() == true) {
-					action.BeforeUpdate();
-					action.Update();
+				if (action.IsApplicable () == true) {
+					action.BeforeUpdate ();
+					action.Update ();
+					action.AfterUpdate ();
 					
 					//--------------------------------
-					Debug.Log(action.Name () + " Processed");
+					Debug.Log (action.Name () + " Processed");
 					//--------------------------------
 					
 				} else {
 					//--------------------------------
-					Debug.Log(action.Name () + " is not applicable!");
+					Debug.Log (action.Name () + " is not applicable!");
 					//--------------------------------
 					
 				}	
 			}
 		}
 				
-		public void ApplyAction<T> (params Common[] current) where T:new()
+		public void ApplyAction<T> (params TileAccessor[] current) where T:new()
 		{
-			ApplyAction(new T() as IAction, current);
+			ApplyAction (new T () as IAction, current);
 		}
 		
-		public void ApplyActionAtNeighbors<T>(Vector2 center_pos, bool [,] Neighborhood) where T:new()
+		public void ApplyActionAtNeighbors<T> (Vector2 center_pos, bool[,] Neighborhood) where T:new()
 		{
-			for (int x =0; x < Neighborhood.GetLength(0); x++) 
-			{
-				for (int y =0; y < Neighborhood.GetLength(1); y++) 
-				{
-					if(Neighborhood[x,y] == true)
-					{
-						int width = worldXSingelton.WorldObjects.GetLength(0);
-						int height = worldXSingelton.WorldObjects.GetLength(1);
-						int world_width = worldXSingelton.WorldObjects.GetLength(0);
-						int world_height = worldXSingelton.WorldObjects.GetLength(1);
+			for (int x =0; x < Neighborhood.GetLength(0); x++) {
+				for (int y =0; y < Neighborhood.GetLength(1); y++) {
+					if (Neighborhood [x, y] == true) {
+						int width = worldXSingelton.Layer2Objects.GetLength (0);
+						int height = worldXSingelton.Layer2Objects.GetLength (1);
+						int world_width = worldXSingelton.Layer2Objects.GetLength (0);
+						int world_height = worldXSingelton.Layer2Objects.GetLength (1);
 						
 						//go to upper left corner of the mask array relative to current pos_self
-						Vector2 pos_local = center_pos + new Vector2(-1,-1);
+						Vector2 pos_local = center_pos + new Vector2 (-1, -1);
 						
 						pos_local.x += x;
 						pos_local.y += y;
 						
 						
-						if(pos_local.x < 0)
-						{
+						if (pos_local.x < 0) {
 							//						Debug.Log(pos_ul.x + x);
 							continue;
 						}
-						if(pos_local.x >= width && pos_local.x >= world_width)
-						{
+						if (pos_local.x >= width && pos_local.x >= world_width) {
 							//						Debug.Log(pos_ul.x + x);
 							continue;
 						}
-						if(pos_local.y < 0)
-						{
+						if (pos_local.y < 0) {
 							//						Debug.Log(pos_ul.y + y);
 							continue;
 						}
-						if(pos_local.y >= height && pos_local.y >= world_height)
-						{
+						if (pos_local.y >= height && pos_local.y >= world_height) {
 							//						Debug.Log(pos_ul.y + y);
 							continue;
 						}
 						
-						ApplyAction(new T() as IAction, worldXSingelton.WorldObjects[(int)pos_local.x,(int)pos_local.y]);
+						ApplyAction (new T () as IAction, new TileAccessor (new Vector2 ((int)pos_local.x, (int)pos_local.y)));
 					}
 				}			
 			}
 		}
 				
-		}
+	}
 }
 

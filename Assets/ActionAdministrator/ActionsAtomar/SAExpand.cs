@@ -18,20 +18,6 @@ namespace RuleAdministration.Rules
 {
 	public class SAExpand : IAction
 	{
-		
-			
-		public SAExpand ()
-		{
-			
-		}
-		
-		public Common CurrentObject{get;set;}
-
-		public void SetObject (Common obj)
-		{
-			CurrentObject = obj;
-			
-		}
 								
 		private string m_TypeName = worldXSingelton.UISelectedType;
 		
@@ -44,39 +30,39 @@ namespace RuleAdministration.Rules
 		/// Determines whether this instance is applicable.
 		/// </summary>
 		/// <returns><c>true</c> if this instance is applicable; otherwise, <c>false</c>.</returns>
-		public bool IsApplicable ()
+		public override bool IsApplicable ()
 		{	
-			return CheckEnvironment (CurrentObject.FigurePosition, m_TypeName);
+			return CheckEnvironment (Tile.Pal.Base().Position, m_TypeName);
 		}
 			
-		public string Name ()
+		public override string Name ()
 		{
 			return "Expand";
 		}
 			
-		public void Update ()
+		public override void Update ()
 		{
 			
-			Common spawnObject = worldXSingelton.CloneZombiPrefab (m_TypeName, CurrentObject.transform.position, Quaternion.identity);
-			spawnObject.GetComponent<Common> ().FigurePosition = CurrentObject.GetComponent<Common> ().FigurePosition;
-			spawnObject.GetComponent<Common> ().FigureType = m_TypeName;
-								
-			Vector2 FigurePosition = spawnObject.GetComponent<Common> ().FigurePosition;
-			worldXSingelton.WorldObjects [(int)FigurePosition.x, (int)FigurePosition.y] = spawnObject;
-			spawnObject.gameObject.SetActive (true);
+			Base spawnObject = worldXSingelton.CloneZombiPrefab (m_TypeName, Tile.Pal.Base().Position, Quaternion.identity).GetComponent<Base>();
+			spawnObject.InitBy(Tile.Pal.Base());
+			spawnObject.Type = m_TypeName;
 			spawnObject.name = m_TypeName;
+													
 			
-			ActionAdministrator.Instance.ApplyAction <SARandomTransform> (spawnObject);
-			GameObject.Destroy (CurrentObject.gameObject);
+			spawnObject.gameObject.SetActive (true);
+			GameObject.Destroy (Tile.Pal.gameObject);
 			
-			CurrentObject = spawnObject as Common;
+			Vector2 pos = spawnObject.Position;
+			worldXSingelton.Layer2Objects [(int)pos.x, (int)pos.y] = spawnObject;
+			Tile.Pal = spawnObject.GetComponentInParent<Pal>();
 			
 		}
-
-		public void BeforeUpdate ()
+		
+		public override void AfterUpdate ()
 		{
+			ActionAdministrator.Instance.ApplyAction <SARandomTransform>(Tile);
+			Tile.Pal.Base().Health -= 1;
 		}
-			
 			
 		private bool[,] Neighborhood = new bool[3, 3]{ 
 			{true,true,true},

@@ -18,46 +18,28 @@ namespace RuleAdministration.Rules
 {
 	public class CAEvolutionise : IAction
 	{
-		
-		Common m_currentobject;
-
-		public Common CurrentObject {
-			get
-			{
-				return m_currentobject;
-			}
-			set
-			{
-				m_currentobject = value;
-				m_upgrade = new SAUpgrade();
-				m_upgrade.SetObject(value);
-				m_downgrade = new SADowngrade();
-				m_downgrade.SetObject(value);
-			}
-		}
-
-		
-
-	
 		private SAUpgrade m_upgrade;
 		private SADowngrade m_downgrade;
 		private int m_update_state = 0;	
 		
-		public CAEvolutionise ()
+		
+		
+		public override bool IsApplicable ()
 		{
+			{// Preprocessing
+				m_upgrade = new SAUpgrade();
+				m_upgrade.Tile = Tile;
+				m_downgrade = new SADowngrade();
+				m_downgrade.Tile = Tile;
+			}
 			
-		}
-		
-		
-		
-		public bool IsApplicable ()
-		{
 			
-			if((this as IAction).CurrentObject.FigureWillpower > 0.9)
+			
+			if(Tile.Pal.Base().Health > 90)
 			{
 				m_update_state = 1;
 				return m_upgrade.IsApplicable();
-			}else if((this as IAction).CurrentObject.FigureWillpower < 0.0)
+			}else if(Tile.Pal.Base().Health < 0.0)
 			{
 				m_update_state = -1;
 				return m_downgrade.IsApplicable();
@@ -66,33 +48,25 @@ namespace RuleAdministration.Rules
 				return true;
 			}
 			
-			
-			
-			
 		}
 			
-		public string Name ()
+		public override  string Name ()
 		{
 			return "Evolutionise";
 		}
 			
-		public void Update ()
+		public override void Update ()
 		{
+			
 			switch(m_update_state)
 			{
-			case 1: ActionAdministrator.Instance.ApplyAction(m_upgrade,(this as IAction).CurrentObject); break;
-			case -1: ActionAdministrator.Instance.ApplyAction(m_downgrade, (this as IAction).CurrentObject); break;	
+			case 1: ActionAdministrator.Instance.ApplyAction(m_upgrade, Tile); 
+			break;
+			case -1: ActionAdministrator.Instance.ApplyAction(m_downgrade, Tile); 
+			break;	
 			}
 			
-			(this as IAction).CurrentObject.FigureWillpower -= 0.1f;
-			
 		}
-
-		public void BeforeUpdate ()
-		{
-		}
-			
-		
 		
 	}
 }

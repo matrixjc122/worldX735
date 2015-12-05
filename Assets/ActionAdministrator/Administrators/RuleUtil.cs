@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -13,10 +13,10 @@ public static class RuleUtil
 		for (int x =0; x < Neighborhood.GetLength(0); x++) {
 			for (int y =0; y < Neighborhood.GetLength(1); y++) {
 				if (Neighborhood [x, y] == true) {
-					int width = worldXSingelton.WorldObjects.GetLength (0);
-					int height = worldXSingelton.WorldObjects.GetLength (1);
-					int world_width = worldXSingelton.WorldObjects.GetLength (0);
-					int world_height = worldXSingelton.WorldObjects.GetLength (1);
+					int width = worldXSingelton.Layer2Objects.GetLength (0);
+					int height = worldXSingelton.Layer2Objects.GetLength (1);
+					int world_width = worldXSingelton.Layer2Objects.GetLength (0);
+					int world_height = worldXSingelton.Layer2Objects.GetLength (1);
 					
 					//go to upper left corner of the mask array relative to current pos_self
 					Vector2 pos_local = center_pos + new Vector2 (-1, -1);
@@ -43,7 +43,7 @@ public static class RuleUtil
 					}
 					
 					
-					string neighborObjectName = worldXSingelton.WorldObjects [(int)pos_local.x, (int)pos_local.y].GetComponent<Common> ().FigureType;
+					string neighborObjectName = worldXSingelton.Layer2Objects [(int)pos_local.x, (int)pos_local.y].GetComponent<Pal> ().Base().Type;
 					if (dict.ContainsKey (neighborObjectName))
 						dict [neighborObjectName]++;
 				}

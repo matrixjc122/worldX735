@@ -14,10 +14,11 @@ using System.Collections;
 
 namespace RuleAdministration.Interfaces
 {
-	public interface IAction
+	public abstract class IAction
 	{
 	
-		Common CurrentObject{get; set;}
+		
+		public virtual  TileAccessor Tile{get; set;}
 	
 		/// <summary>
 		/// Determines whether this instance is applicable the specified obj.
@@ -25,7 +26,7 @@ namespace RuleAdministration.Interfaces
 		/// <returns><c>true</c> if this instance is appli-
 		/// cable the specified obj; otherwise, <c>false</c>.</returns>
 		/// <param name="obj">Object.</param>
-		bool IsApplicable();
+		public virtual bool IsApplicable(){return true;}
 
 		/// <summary>
 		/// Processes the action. In this function concret 
@@ -34,18 +35,20 @@ namespace RuleAdministration.Interfaces
 		/// </summary>
 		/// <returns><c>true</c>, if action was processed, <c>false</c> otherwise.</returns>
 		/// <param name="obj">Object.</param>
-		void Update();
+		public virtual void Update(){}
 
 		/// <summary>
 		/// Do some action state changes. E.g. if a action have to do some calculations.
 		/// Otherwise create a empty method;
 		/// </summary>
-		void BeforeUpdate();
+		public virtual void BeforeUpdate(){}
+		
+		public virtual void AfterUpdate(){}
 
 		/// <summary>
 		/// Name of the action.
 		/// </summary>
-		string Name();
+		public virtual string Name(){return "Override Method string Name()";}
 		
 	}
 }

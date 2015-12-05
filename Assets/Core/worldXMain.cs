@@ -31,27 +31,39 @@ public class worldXMain : MonoBehaviour {
 	{
 	
 
-		Common[,] objects = worldXSingelton.WorldObjects;
-		for (int x = 0; x < objects.GetLength(0); x++) 
+		Base[,] pals = worldXSingelton.Layer2Objects;
+		Base[,] floors = worldXSingelton.Layer3Floor;
+		Base[,] nutrients = worldXSingelton.Layer4Nutrients;
+		for (int x = 0; x < pals.GetLength(0); x++) 
 		{
-			for (int y = 0; y < objects.GetLength(1); y++) 
+			for (int y = 0; y < pals.GetLength(1); y++) 
 			{
 				Vector3 displacment = new Vector3(x,0,y);
-				Vector3 offset = new Vector3(-objects.GetLength(0)/2.0f,0,-objects.GetLength(1)/2.0f);
+				Vector3 offset = new Vector3(-pals.GetLength(0)/2.0f,0,-pals.GetLength(1)/2.0f);
 
 
-				if( x == objects.GetLength(0)/2 && y == objects.GetLength(1)/2)
+				if( x == pals.GetLength(0)/2 && y == pals.GetLength(1)/2)
 				{
-					objects[x,y] = worldXSingelton.CloneZombiPrefab("A", displacment + offset, transform.rotation);
-					objects[x,y].GetComponent<Common>().FigureType = "A";
-				}else{
-					objects[x,y] = worldXSingelton.CloneZombiPrefab("Boden", displacment + offset, transform.rotation);
-					objects[x,y].GetComponent<Common>().FigureType = "Boden";
+					pals[x,y] = worldXSingelton.CloneZombiPrefab("A", displacment + offset, transform.rotation).GetComponent<Base>();
+					pals[x,y].Type = "A";
 				}
-
-
-				objects[x,y].GetComponent<Common>().FigurePosition = new Vector2(x,y);
-				objects[x,y].gameObject.SetActive(true);
+				
+				floors[x,y] = worldXSingelton.CloneZombiPrefab("Boden", displacment + offset, transform.rotation).GetComponent<Base>();
+				floors[x,y].Type = "Boden";
+				
+				
+				GameObject obj = new GameObject();
+				obj.AddComponent<Base>().Type = "Nut";	
+				nutrients[x,y] = obj.AddComponent<Nutrients>().Base();
+			
+				
+				pals[x,y].Position = new Vector2(x,y);
+				pals[x,y].gameObject.SetActive(true);
+				
+				floors[x,y].Position = new Vector2(x,y);
+				floors[x,y].gameObject.SetActive(true);
+				
+				
 			}
 		}
 

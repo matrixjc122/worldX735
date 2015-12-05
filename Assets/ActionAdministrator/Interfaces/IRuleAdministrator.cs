@@ -24,7 +24,7 @@ namespace RuleAdministration.Interfaces
 		/// </summary>
 		/// <param name="obj">Object.</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		void ApplyAction<T>(params Common[] obj) where T:new();
+		void ApplyAction<T>(params TileAccessor[] obj) where T:new();
 
 		/// <summary>
 		/// Applies the action to the GameObject. This process contains
@@ -34,22 +34,7 @@ namespace RuleAdministration.Interfaces
 		/// </summary>
 		/// <param name="obj">Object.</param>
 		/// <param name="action">Action.</param>
-		void ApplyAction(IAction action, params Common[]  obj);
-
-		/// <summary>
-		/// Applies the action global. See ApplyAction<T>(). Forward to
-		/// overloaded method,
-		/// </summary>
-		/// <typeparam name="T">The 1st type parameter.</typeparam>
-			void ApplyActionGlobal<T>() where T:new();
-
-		/// <summary>
-		/// Applies the action to all GameObjects in the world. For
-		/// each GameObject g a ApplyAction(g) call.
-		/// </summary>
-		/// <param name="action">Action.</param>
-			void ApplyActionGlobal(IAction action);
-
+		void ApplyAction(IAction action, params TileAccessor[]  obj);
 
 //			void RegisterRule(string type, /*string category,*/ IAction rule);
 		}

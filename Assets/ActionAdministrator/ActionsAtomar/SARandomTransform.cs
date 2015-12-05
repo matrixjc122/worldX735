@@ -18,30 +18,15 @@ namespace RuleAdministration.Rules
 {
 	public class SARandomTransform : IAction
 	{
-		public SARandomTransform ()
-		{
-		}
   
-		public Common CurrentObject{get;set;}
-
-		public void SetObject (Common obj)
-		{
-			CurrentObject = obj;
-		}
-  
-		public bool IsApplicable ()
-		{
-			return true;
-		}
-			
-		public string Name ()
+		public override string Name ()
 		{
 			return "RandomTransformationAction";
 		}
 			
-		public void Update ()
+		public override void Update ()
 		{
-			Transform[] transformable = CurrentObject.GetComponentsInChildren <Transform> ();
+			Transform[] transformable = Tile.Pal.GetComponentsInChildren <Transform> ();
 			for (int i = 0; i < transformable.Length; i++) {
 				
 				//SCALE	
@@ -70,10 +55,6 @@ namespace RuleAdministration.Rules
 				if (transformable [i].gameObject.name == "Boden" || transformable [i].gameObject.name == "Particle System")
 					transformable [i].localRotation = Quaternion.identity;
 			}
-		}
-
-		public void BeforeUpdate ()
-		{
 		}
 	}
 }

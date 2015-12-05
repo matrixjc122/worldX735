@@ -14,10 +14,11 @@ using System.Collections;
 
 namespace RuleAdministration.Interfaces
 {
-	public interface IRandomAction : IAction
+	public interface ISelector
 	{
+		TileAccessor Tile{get; set;}
 	
-		Common[] GetRandomObjects(System.Random random);
+		TileAccessor[] GetSelectedObjects();
 		
 	}
 }

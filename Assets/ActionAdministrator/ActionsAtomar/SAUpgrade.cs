@@ -18,38 +18,18 @@ namespace RuleAdministration.Rules
 {
 	public class SAUpgrade : IAction
 	{
-		private SAExpand expand;
 		
-		public SAUpgrade ()
-		{
-			
-		}
-		
-		public Common CurrentObject{get;set;}
-		
-		public void SetObject (Common obj)
-		{
-			CurrentObject = obj;
-			expand = new SAExpand();
-			expand.SetObject(CurrentObject);
-		}
-		
-		public bool IsApplicable ()
-		{
-			return expand.IsApplicable();
-		}
-			
-		public string Name ()
+		public override string Name ()
 		{
 			return "Upgrade";
 		}
 			
-		public void Update ()
+		public override void Update ()
 		{
 			string new_type = "C";
 			
 			// Get next gen. object type
-			switch(CurrentObject.FigureType)
+			switch(Tile.Pal.Base().Type)
 			{
 			case "Boden" : new_type = "A"; break;
 			case "A" : new_type = "B"; break;
@@ -57,17 +37,11 @@ namespace RuleAdministration.Rules
 			}
 			
 			// Reuse ExpandAction for placing object
-			
-			expand.SetTypeName(new_type);
-			ActionAdministrator.Instance.ApplyAction(expand,CurrentObject);
+			SAExpand expandAction = new SAExpand();
+			expandAction.SetTypeName(new_type);
+			ActionAdministrator.Instance.ApplyAction(expandAction,Tile);
 						
 		}
-
-		public void BeforeUpdate ()
-		{
-		}
-			
-		
 		
 	}
 }
