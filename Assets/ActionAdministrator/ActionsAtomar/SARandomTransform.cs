@@ -26,7 +26,7 @@ namespace RuleAdministration.Rules
 			
 		public override void Update ()
 		{
-			Transform[] transformable = Tile.Pal.GetComponentsInChildren <Transform> ();
+			Transform[] transformable = _Tile.gameObject.GetComponents <Transform> ();
 			for (int i = 0; i < transformable.Length; i++) {
 				
 				//SCALE	
@@ -37,7 +37,7 @@ namespace RuleAdministration.Rules
 					 r * transformable [i].localScale.z);
 				
 				//POSITION
-				if (transformable [i].gameObject.name == "B" || transformable [i].gameObject.name == "C") {
+				if (transformable [i].gameObject.name == "pal_B" || transformable [i].gameObject.name == "pal_C") {
 					r = UnityEngine.Random.Range (-0.1f, 0.1f);
 					transformable [i].localPosition = new Vector3 (
 						 r + transformable [i].localPosition.x,

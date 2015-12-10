@@ -16,9 +16,9 @@ namespace RuleAdministration.Interfaces
 {
 	public interface ISelector
 	{
-		TileAccessor Tile{get; set;}
+		Tile _Tile{get; set;}
 	
-		TileAccessor[] GetSelectedObjects();
+		Tile[] GetSelectedObjects();
 		
 	}
 }

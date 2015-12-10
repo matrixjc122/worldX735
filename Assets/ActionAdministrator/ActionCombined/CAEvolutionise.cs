@@ -28,18 +28,19 @@ namespace RuleAdministration.Rules
 		{
 			{// Preprocessing
 				m_upgrade = new SAUpgrade();
-				m_upgrade.Tile = Tile;
+				m_upgrade._Tile = _Tile;
 				m_downgrade = new SADowngrade();
-				m_downgrade.Tile = Tile;
+				m_downgrade._Tile = _Tile;
 			}
 			
-			
-			
-			if(Tile.Pal.Base().Health > 90)
+			if(_Tile._Pal == null){
+				m_update_state = 0;
+				return true;
+			}else if(_Tile._Pal._Health > 90)
 			{
 				m_update_state = 1;
 				return m_upgrade.IsApplicable();
-			}else if(Tile.Pal.Base().Health < 0.0)
+			}else if(_Tile._Pal._Health < 0.0)
 			{
 				m_update_state = -1;
 				return m_downgrade.IsApplicable();
@@ -60,9 +61,9 @@ namespace RuleAdministration.Rules
 			
 			switch(m_update_state)
 			{
-			case 1: ActionAdministrator.Instance.ApplyAction(m_upgrade, Tile); 
+			case 1: ActionAdministrator.Instance.ApplyAction(m_upgrade, _Tile); 
 			break;
-			case -1: ActionAdministrator.Instance.ApplyAction(m_downgrade, Tile); 
+			case -1: ActionAdministrator.Instance.ApplyAction(m_downgrade, _Tile); 
 			break;	
 			}
 			

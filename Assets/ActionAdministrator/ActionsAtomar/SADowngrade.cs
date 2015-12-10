@@ -28,20 +28,20 @@ namespace RuleAdministration.Rules
 		{
 			string new_type = "Boden";
 			// Get previouse 
-			switch (Tile.Pal.Base().Type) {
-			case "C":
-				new_type = "B";
+			switch (_Tile._Pal._Type) {
+			case "pal_C":
+				new_type = "pal_B";
 				break;
-			case "B":
-				new_type = "A";
+			case "pal_B":
+				new_type = "pal_A";
 				break;
-			case "A":
+			case "pal_A":
 				new_type = "Boden";
 				break;
 			}
 			SAExpand expandAction = new SAExpand();
 			expandAction.SetTypeName (new_type);
-			ActionAdministrator.Instance.ApplyAction (expandAction, Tile);
+			ActionAdministrator.Instance.ApplyAction (expandAction, _Tile);
 		
 		}
 		

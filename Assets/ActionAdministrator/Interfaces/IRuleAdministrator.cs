@@ -24,7 +24,7 @@ namespace RuleAdministration.Interfaces
 		/// </summary>
 		/// <param name="obj">Object.</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		void ApplyAction<T>(params TileAccessor[] obj) where T:new();
+		void ApplyAction<T>(params Tile[] obj) where T:new();
 
 		/// <summary>
 		/// Applies the action to the GameObject. This process contains
@@ -34,7 +34,7 @@ namespace RuleAdministration.Interfaces
 		/// </summary>
 		/// <param name="obj">Object.</param>
 		/// <param name="action">Action.</param>
-		void ApplyAction(IAction action, params TileAccessor[]  obj);
+		void ApplyAction(IAction action, params Tile[]  obj);
 
 //			void RegisterRule(string type, /*string category,*/ IAction rule);
 		}

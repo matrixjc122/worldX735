@@ -19,10 +19,10 @@ namespace RuleAdministration.Rules
 {
 	public class LocalRandomSelector : ISelector
 	{
-		private TileAccessor m_Tile;
+		private Tile m_Tile;
 		public int Radius{get;set;}
 
-		public TileAccessor Tile {
+		public Tile _Tile {
 			get {
 				return m_Tile;
 			}
@@ -34,43 +34,43 @@ namespace RuleAdministration.Rules
 		public LocalRandomSelector (Vector2 currentPos, int radius)
 		{
 			this.Radius = radius;
-			this.Tile = new TileAccessor(currentPos);	
+			this._Tile = new Tile(currentPos.x,currentPos.y);	
 			
 		}
 		
 		
 		
-		public LocalRandomSelector (TileAccessor locator, int radius)
+		public LocalRandomSelector (Tile locator, int radius)
 		{
 			this.Radius = radius;
-			this.Tile = locator;	
+			this._Tile = locator;	
 		}
 		
 			
-		public TileAccessor[] GetSelectedObjects ()
+		public Tile[] GetSelectedObjects ()
 		{
 			System.Random random = new System.Random();
 			
 			int n = random.Next (1, (2*Radius+1)^2);
 			
-			Vector2 origin = this.m_Tile.TilePosition;
+			Vector2 origin = this.m_Tile._Position;
 			
 			HashSet<Vector2> result_pos = new HashSet<Vector2>();
-			List<TileAccessor> result = new List<TileAccessor>();
+			List<Tile> result = new List<Tile>();
 			for (int i = 0; i < n;) {
 				Vector2 pos = new Vector2(
 					random.Next (((int)origin.x - Radius) < 0 ? 0 : (int)origin.x - Radius,
-				             ((int)origin.x + Radius) >= worldXSingelton.Layer2Objects.GetLength(0) ? worldXSingelton.Layer2Objects.GetLength(0) - 1: ((int)origin.x + Radius)),
+				             ((int)origin.x + Radius) >= Paradise.Intance._Tiles.GetLength(0) ? Paradise.Intance._Tiles.GetLength(0) - 1: ((int)origin.x + Radius)),
 					random.Next (((int)origin.y - Radius) < 0 ? 0 : (int)origin.y - Radius,
-				             ((int)origin.x + Radius) >= worldXSingelton.Layer2Objects.GetLength(1) ? worldXSingelton.Layer2Objects.GetLength(1) - 1: ((int)origin.y + Radius))
+				             ((int)origin.x + Radius) >= Paradise.Intance._Tiles.GetLength(1) ? Paradise.Intance._Tiles.GetLength(1) - 1: ((int)origin.y + Radius))
 				               );
 				
 				
-				if(pos == this.Tile.TilePosition) continue;
+				if(pos == this._Tile._Position) continue;
 				if(result_pos.Contains(pos)) continue;
 				
 				result_pos.Add(pos);
-				result.Add(new TileAccessor(pos));
+				result.Add(new Tile(pos.x,pos.y));
 				
 				i++; 
 				}

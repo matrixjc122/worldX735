@@ -18,7 +18,7 @@ namespace RuleAdministration.Interfaces
 	{
 	
 		
-		public virtual  TileAccessor Tile{get; set;}
+		public virtual Tile _Tile{get; set;}
 	
 		/// <summary>
 		/// Determines whether this instance is applicable the specified obj.

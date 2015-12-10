@@ -19,11 +19,11 @@ namespace RuleAdministration.Rules
 	public class SAExpand : IAction
 	{
 								
-		private string m_TypeName = worldXSingelton.UISelectedType;
+		private string _SelectedType = Paradise.Intance.UISelectedType;
 		
 		public void SetTypeName (string typename)
 		{
-			m_TypeName = typename;
+			_SelectedType = typename;
 		}
 					
 		/// <summary>
@@ -32,7 +32,7 @@ namespace RuleAdministration.Rules
 		/// <returns><c>true</c> if this instance is applicable; otherwise, <c>false</c>.</returns>
 		public override bool IsApplicable ()
 		{	
-			return CheckEnvironment (Tile.Pal.Base().Position, m_TypeName);
+			return CheckEnvironment (_Tile._Position, _SelectedType);
 		}
 			
 		public override string Name ()
@@ -43,25 +43,16 @@ namespace RuleAdministration.Rules
 		public override void Update ()
 		{
 			
-			Base spawnObject = worldXSingelton.CloneZombiPrefab (m_TypeName, Tile.Pal.Base().Position, Quaternion.identity).GetComponent<Base>();
-			spawnObject.InitBy(Tile.Pal.Base());
-			spawnObject.Type = m_TypeName;
-			spawnObject.name = m_TypeName;
-													
+			this._Tile._Pal.ChangeType(_SelectedType);
+			// Update properties if neccessary
 			
-			spawnObject.gameObject.SetActive (true);
-			GameObject.Destroy (Tile.Pal.gameObject);
-			
-			Vector2 pos = spawnObject.Position;
-			worldXSingelton.Layer2Objects [(int)pos.x, (int)pos.y] = spawnObject;
-			Tile.Pal = spawnObject.GetComponentInParent<Pal>();
-			
+
 		}
 		
 		public override void AfterUpdate ()
 		{
-			ActionAdministrator.Instance.ApplyAction <SARandomTransform>(Tile);
-			Tile.Pal.Base().Health -= 1;
+			ActionAdministrator.Instance.ApplyAction <SARandomTransform>(_Tile);
+			_Tile._Pal._Health -= 1;
 		}
 			
 		private bool[,] Neighborhood = new bool[3, 3]{ 
@@ -69,32 +60,41 @@ namespace RuleAdministration.Rules
 			{true, false , true},
 			{ true,true,true} };
 			
-		public bool CheckEnvironment (Vector2 center_pos, string type)
+		public bool CheckEnvironment (Vector2 pos, string type)
 		{
-					
-			Dictionary<string, int> hits = RuleUtil.GetHitsFor (center_pos, Neighborhood);
+//			Debug.LogError(pos + " : " + type);
+			Dictionary<string, int> hits = RuleUtil.GetHitsFor (pos, Neighborhood,new Dictionary<string,int>()
+			{
+				{"pal_A", 0},
+				{"pal_B", 0},
+				{"pal_C", 0},
+				{"tile_boden", 0}
+			});
 								
 			bool status = false;
 		
 				
 		switch (type) {
-		case("Boden"):
+		case("tile_boden"):
 				status = true;
+				Debug.Log ("Boden found");
 				break;
-		case("A"):
-				status = (hits ["A"] >= 1 || hits ["B"] >= 1 || hits ["C"] >= 1) // Or'd Minimal requirements
-						&& hits ["A"] <= 4 && hits ["B"] <= 4 && hits ["C"] <= 4;
+		case("pal_A"):
+				status = (hits ["pal_A"] >= 0 || hits ["pal_B"] >= 0 || hits ["pal_C"] >= 0) // Or'd Minimal requirements
+						&& hits ["pal_A"] <= 4 && hits ["pal_B"] <= 4 && hits ["pal_C"] <= 4;
+				Debug.Log ("A found " + status);
 				break;
-		case("B"):
-				status = hits ["A"] >= 3 && hits ["A"] < int.MaxValue
-						&& hits ["B"] >= 0 && hits ["B"] <= 0 
-						&& hits ["C"] >= 0 && hits ["C"] < int.MaxValue;
+		case("pal_B"):
+				status = hits ["pal_A"] >= 3 && hits ["pal_A"] < int.MaxValue
+						&& hits ["pal_B"] >= 0 && hits ["pal_B"] <= 0 
+						&& hits ["pal_C"] >= 0 && hits ["pal_C"] < int.MaxValue;
+				Debug.Log ("B found " + status);
 				break;
-		case("C"):
-				status = hits ["A"] >= 3 && hits ["A"] < int.MaxValue
-						&& hits ["B"] >= 2 && hits ["B"] < int.MaxValue
-						&& hits ["C"] >= 0 && hits ["C"] < int.MaxValue;
-								         
+		case("pal_C"):
+				status = hits ["pal_A"] >= 3 && hits ["pal_A"] < int.MaxValue
+						&& hits ["pal_B"] >= 2 && hits ["pal_B"] < int.MaxValue
+						&& hits ["pal_C"] >= 0 && hits ["pal_C"] < int.MaxValue;
+				Debug.Log ("C found " + status);	         
 					break;
 			}
 				return status;

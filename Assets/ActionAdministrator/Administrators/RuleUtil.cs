@@ -5,47 +5,53 @@ using System.Collections.Generic;
 public static class RuleUtil
 {
 
-	public static Dictionary<string,int> GetHitsFor (Vector2 center_pos, bool[,] Neighborhood)
+	public static Dictionary<string,int> GetHitsFor (Vector2 center_pos, bool[,] Neighborhood, Dictionary<string,int> dict)
 	{
 		//Vector2 pos_self = centerObject.GetComponent<Common> ().FigurePosition;
-		Dictionary<string,int> dict = worldXSingelton.CreateEmptyTypeDictionary ();
+		
 		
 		for (int x =0; x < Neighborhood.GetLength(0); x++) {
 			for (int y =0; y < Neighborhood.GetLength(1); y++) {
 				if (Neighborhood [x, y] == true) {
-					int width = worldXSingelton.Layer2Objects.GetLength (0);
-					int height = worldXSingelton.Layer2Objects.GetLength (1);
-					int world_width = worldXSingelton.Layer2Objects.GetLength (0);
-					int world_height = worldXSingelton.Layer2Objects.GetLength (1);
+					int width = Paradise.Intance._Tiles.GetLength (0);
+					int height = Paradise.Intance._Tiles.GetLength (1);
+					int world_width = Paradise.Intance._Tiles.GetLength (0);
+					int world_height = Paradise.Intance._Tiles.GetLength (1);
 					
 					//go to upper left corner of the mask array relative to current pos_self
-					Vector2 pos_local = center_pos + new Vector2 (-1, -1);
+					Vector2 pos = center_pos + new Vector2 (-1, -1);
 					
-					pos_local.x += x;
-					pos_local.y += y;
+					pos.x += x;
+					pos.y += y;
 					
 					
-					if (pos_local.x < 0) {
+					if (pos.x < 0) {
 						//						Debug.Log(pos_ul.x + x);
 						continue;
 					}
-					if (pos_local.x >= width && pos_local.x >= world_width) {
+					if (pos.x >= width && pos.x >= world_width) {
 						//						Debug.Log(pos_ul.x + x);
 						continue;
 					}
-					if (pos_local.y < 0) {
+					if (pos.y < 0) {
 						//						Debug.Log(pos_ul.y + y);
 						continue;
 					}
-					if (pos_local.y >= height && pos_local.y >= world_height) {
+					if (pos.y >= height && pos.y >= world_height) {
 						//						Debug.Log(pos_ul.y + y);
 						continue;
 					}
 					
-					
-					string neighborObjectName = worldXSingelton.Layer2Objects [(int)pos_local.x, (int)pos_local.y].GetComponent<Pal> ().Base().Type;
+					Tile t = Paradise.Intance._Tiles[(int)pos.x, (int)pos.y];
+					  
+					string neighborObjectName = t._Pal._Type;
 					if (dict.ContainsKey (neighborObjectName))
 						dict [neighborObjectName]++;
+					
+					neighborObjectName = t._Floor._Type;
+					if (dict.ContainsKey (neighborObjectName))
+						dict [neighborObjectName]++;
+					
 				}
 			}			
 		}

@@ -25,7 +25,7 @@ namespace RuleAdministration.Administrators
 			
 		private static ActionAdministrator _instance = new ActionAdministrator ();
 		private Dictionary<string, Dictionary<string,IAction> > _AssociatedRules;
-		public IErrorMessage _ErrorMessage = new ErrorMessage ();
+//		public IErrorMessage _ErrorMessage = new ErrorMessage ();
 			
 
 		/// <summary>
@@ -77,27 +77,27 @@ namespace RuleAdministration.Administrators
 		{
 		}
 
-		public void ApplyAction<SelectorType, ActionType> (params TileAccessor[] list) where SelectorType:new() where ActionType:new()
+		public void ApplyAction<SelectorType, ActionType> (params Tile[] list) where SelectorType:new() where ActionType:new()
 		{
 			ApplyAction (new SelectorType () as ISelector, new ActionType () as IAction, list);
 		}
 		
-		public void ApplyAction<ActionType> (ISelector selector, params TileAccessor[] list) where ActionType:new()
+		public void ApplyAction<ActionType> (ISelector selector, params Tile[] list) where ActionType:new()
 		{
 			ApplyAction (selector, new ActionType () as IAction, list);
 		}
 			
-		public void ApplyAction (ISelector selector, IAction action, params TileAccessor[] objects)
+		public void ApplyAction (ISelector selector, IAction action, params Tile[] objects)
 		{
 			// Create Random Selector
 			ApplyAction (action, selector.GetSelectedObjects ());
 		}
 	
-		public void ApplyAction (IAction action, params TileAccessor[] list)
+		public void ApplyAction (IAction action, params Tile[] list)
 		{
 
-			foreach (TileAccessor tile in list) {
-				action.Tile = tile;
+			foreach (Tile tile in list) {
+				action._Tile = tile;
 				
 				if (action.IsApplicable () == true) {
 					action.BeforeUpdate ();
@@ -117,51 +117,11 @@ namespace RuleAdministration.Administrators
 			}
 		}
 				
-		public void ApplyAction<T> (params TileAccessor[] current) where T:new()
+		public void ApplyAction<T> (params Tile[] current) where T:new()
 		{
 			ApplyAction (new T () as IAction, current);
 		}
 		
-		public void ApplyActionAtNeighbors<T> (Vector2 center_pos, bool[,] Neighborhood) where T:new()
-		{
-			for (int x =0; x < Neighborhood.GetLength(0); x++) {
-				for (int y =0; y < Neighborhood.GetLength(1); y++) {
-					if (Neighborhood [x, y] == true) {
-						int width = worldXSingelton.Layer2Objects.GetLength (0);
-						int height = worldXSingelton.Layer2Objects.GetLength (1);
-						int world_width = worldXSingelton.Layer2Objects.GetLength (0);
-						int world_height = worldXSingelton.Layer2Objects.GetLength (1);
-						
-						//go to upper left corner of the mask array relative to current pos_self
-						Vector2 pos_local = center_pos + new Vector2 (-1, -1);
-						
-						pos_local.x += x;
-						pos_local.y += y;
-						
-						
-						if (pos_local.x < 0) {
-							//						Debug.Log(pos_ul.x + x);
-							continue;
-						}
-						if (pos_local.x >= width && pos_local.x >= world_width) {
-							//						Debug.Log(pos_ul.x + x);
-							continue;
-						}
-						if (pos_local.y < 0) {
-							//						Debug.Log(pos_ul.y + y);
-							continue;
-						}
-						if (pos_local.y >= height && pos_local.y >= world_height) {
-							//						Debug.Log(pos_ul.y + y);
-							continue;
-						}
-						
-						ApplyAction (new T () as IAction, new TileAccessor (new Vector2 ((int)pos_local.x, (int)pos_local.y)));
-					}
-				}			
-			}
-		}
-				
 	}
 }
 
