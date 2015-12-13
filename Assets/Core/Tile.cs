@@ -80,6 +80,10 @@ public class Tile : MonoBehaviour{
 		MOAPreview action = new MOAPreview();
 		action._Status = MOAPreview.Stats.ENTER;
 		ActionAdministrator.Instance.ApplyAction(action,this);
+
+		SAScale scale_action = new SAScale();
+		scale_action._ScaleFactor = 1.2f;
+		ActionAdministrator.Instance.ApplyAction (scale_action, this);
 		
 	} 
 	
@@ -89,7 +93,11 @@ public class Tile : MonoBehaviour{
 		MOAPreview action = new MOAPreview();
 		action._Status = MOAPreview.Stats.EXIT;
 		ActionAdministrator.Instance.ApplyAction(action,this);
-		
+
+		SAScale scale_action = new SAScale();
+		scale_action._ScaleFactor = 1.0f;
+		ActionAdministrator.Instance.ApplyAction (scale_action, this);
+
 		//		ActionAdministrator.Instance.ApplyAction<SAUpgrade>(this);
 		
 	} 

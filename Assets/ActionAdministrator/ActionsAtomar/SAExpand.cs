@@ -44,7 +44,9 @@ namespace RuleAdministration.Rules
 		{
 			
 			this._Tile.AccosiateType<PalProperty>(_SelectedType);
-			
+			MOAPreview action = new MOAPreview ();
+			action._Status = MOAPreview.Stats.EXIT;
+			ActionAdministrator.Instance.ApplyAction (action, _Tile);
 
 		}
 		
