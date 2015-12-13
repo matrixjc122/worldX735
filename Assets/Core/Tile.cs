@@ -48,7 +48,7 @@ public class Tile : MonoBehaviour{
 		_Nutrients = this.gameObject.AddComponent<NutrientsPart>();
 		_Floor = this.gameObject.AddComponent<FloorProperty>();	
 		BoxCollider collider = this.gameObject.AddComponent<BoxCollider>();
-		collider.size = new Vector3(0.5f,0.5f,0.5f);
+		collider.size = new Vector3(1.0f,0.01f,1.0f);
 		
 		
 		
