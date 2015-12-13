@@ -98,19 +98,19 @@ namespace RuleAdministration.Administrators
 
 			foreach (Tile tile in list) {
 				action._Tile = tile;
-				
+				action.BeforeUpdate ();
 				if (action.IsApplicable () == true) {
-					action.BeforeUpdate ();
+					
 					action.Update ();
 					action.AfterUpdate ();
 					
 					//--------------------------------
-					Debug.Log (action.Name () + " Processed");
+//					Debug.Log (action.Name () + " Processed");
 					//--------------------------------
 					
 				} else {
 					//--------------------------------
-					Debug.Log (action.Name () + " is not applicable!");
+//					Debug.Log (action.Name () + " is not applicable!");
 					//--------------------------------
 					
 				}	

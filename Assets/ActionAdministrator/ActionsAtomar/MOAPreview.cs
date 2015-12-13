@@ -10,8 +10,9 @@ namespace RuleAdministration.Rules
 	public class MOAPreview : SAExpand
 	{
 		
+		public enum Stats{EXIT,ENTER};
 		static private GameObject prefab;
-		public bool _Enable;
+		public Stats _Status;
 		
 		public override string Name ()
 		{
@@ -21,8 +22,11 @@ namespace RuleAdministration.Rules
 		
 		public override bool IsApplicable()
 		{
-		
-			if(_Enable == false) return true;
+			Debug.Log("Status " + _Status);
+			if(_Status == Stats.EXIT) return true;
+			Debug.Log("Tile: " +(bool)( _Tile != null));
+			Debug.Log("Pal: " + (bool)(_Tile._Pal != null));
+			
 			
 			if(_Tile._Pal._Type.Equals("None"))
 			{
@@ -30,8 +34,6 @@ namespace RuleAdministration.Rules
 				switch(_Tile._Floor._Type)
 				{
 				case "tile_boden" : base._SelectedType = "pal_A"; break;
-				case "pal_A" : base._SelectedType = "pal_B"; break;
-				case "pal_B" : base._SelectedType = "pal_C"; break;
 					// more appearence types
 				}
 			}else
@@ -48,18 +50,23 @@ namespace RuleAdministration.Rules
 			return base.IsApplicable();
 		}
 		
+		
 		public override void Update ()
 		{
-			if(_Enable)
+			Debug.Log(_Status);
+			if(_Status == Stats.ENTER)
 			{
 				prefab = this._Tile.MakePrefab(base._SelectedType);
 				prefab.SetActive(true);
+				Color col = prefab.GetComponent<MeshRenderer>().material.color;
+				col.a = 0.5f;
 				if(this._Tile._Pal._Appearence)
 					this._Tile._Pal._Appearence.SetActive(false);
-			}else
+			}
+			if(_Status == Stats.EXIT && prefab != null) 
 			{
 				prefab.SetActive(false);
-				GameObject.Destroy(prefab);
+				GameObject.DestroyImmediate(prefab);
 				if(this._Tile._Pal._Appearence)
 					this._Tile._Pal._Appearence.SetActive(true);
 			}

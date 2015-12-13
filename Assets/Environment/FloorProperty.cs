@@ -4,7 +4,7 @@ using RuleAdministration.Administrators;
 using RuleAdministration.Rules;
 using System.Collections.Generic;
 
-public class Floor : Base
+public class FloorProperty : BaseProperty
 {
 
 	public float _FloorPeneltryRate{ get; set; }

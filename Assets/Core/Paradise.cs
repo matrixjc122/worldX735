@@ -62,17 +62,25 @@ public class Paradise : MonoBehaviour
 				GameObject _tileObject = new GameObject("TileObject");
 				Tile t = _tileObject.AddComponent<Tile>();
 				t.LazyInitialisation(worldPosition, arrayPosition);
+				_tileObject.SetActive (true); // Becomes alive
+				
+				
 				
 				// Assign tile to 2d array
 				this._TileObjects [(int)x, (int)y] = t; 
 				if(_TileObjects.GetLength (0) / 2.0f == x && _TileObjects.GetLength (1) / 2.0f == y)
 				{
-					t.AccosiateType<Pal>("pal_A");	
+					t.AccosiateType<PalProperty>("pal_A");
+					t._Pal._Health = 100;
+					t._Pal._Type = "pal_A";
+						
+				}else{
+					t._Pal._Health = 100;
+					t._Pal._Type = "None";
 				}
-				t.AccosiateType<Floor>( "tile_boden");
+				t.AccosiateType<FloorProperty>("tile_boden");
 				
 				
-				_tileObject.SetActive (true); // Becomes alive
 				
 			}
 		}

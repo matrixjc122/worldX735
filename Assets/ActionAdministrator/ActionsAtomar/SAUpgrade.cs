@@ -7,49 +7,46 @@ using System.Collections;
 	
 namespace RuleAdministration.Rules
 {
-	public class SAUpgrade : IAction
+	public class SAUpgrade : SAExpand
 	{
 		
 		public override string Name ()
 		{
 			return "Upgrade";
 		}
-			
-		public override void Update ()
+		
+		public override void AfterUpdate ()
 		{
-			string new_type = "None";
-			
+			//			ActionAdministrator.Instance.ApplyAction <SARandomTransform>(_Tile);
+			_Tile._Pal._Health -= 1;
+		}
+		
+		public override bool IsApplicable ()
+		{
+			return base.IsApplicable();
+		}
+		
+		public override void BeforeUpdate()
+		{
 			if(_Tile._Pal._Type.Equals("None"))
 			{
-				// switch floor type
 				switch(_Tile._Floor._Type)
 				{
-				case "tile_boden" : new_type = "pal_A"; break;
-				case "pal_A" : new_type = "pal_B"; break;
-				case "pal_B" : new_type = "pal_C"; break;
-				// more appearence types
+				case "tile_boden" : base._SelectedType = "pal_A"; break;
 				}
 			}else
 			{
 				// switch pal tile
 				switch(_Tile._Pal._Type)
 				{
-				
-				case "pal_A" : new_type = "pal_B"; break;
-				case "pal_B" : new_type = "pal_C"; break;
+				case "pal_A" : base._SelectedType = "pal_B"; break;
+				case "pal_B" : base._SelectedType = "pal_C"; break;
 				}
 			}
 			
-			// Get next gen. object type
-			
-			
-			
-			// Reuse ExpandAction for placing object
-			SAExpand expandAction = new SAExpand();
-			expandAction.SetTypeName(new_type);
-			ActionAdministrator.Instance.ApplyAction(expandAction,_Tile);
-						
+			base.BeforeUpdate();
 		}
+			
 		
 	}
 }

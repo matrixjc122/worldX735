@@ -43,12 +43,12 @@ public static class RuleUtil
 					}
 					
 					Tile t = Paradise.Intance._TileObjects[(int)pos.x, (int)pos.y];
-					Debug.Log(t._Pal._Type);
+					
 					string neighborObjectName = t._Pal._Type;
 					if (dict.ContainsKey (neighborObjectName))
 						dict [neighborObjectName]++;
 					
-					Debug.Log(t._Floor._Type);
+//					Debug.Log(t._Floor._Type);
 					neighborObjectName = t._Floor._Type;
 					if (dict.ContainsKey (neighborObjectName))
 						dict [neighborObjectName]++;
@@ -56,6 +56,8 @@ public static class RuleUtil
 				}
 			}			
 		}
+		foreach(string key in dict.Keys)
+			Debug.Log(key + " " + dict[key]);
 		
 		return dict;
 	}

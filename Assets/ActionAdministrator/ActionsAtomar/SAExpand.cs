@@ -43,16 +43,12 @@ namespace RuleAdministration.Rules
 		public override void Update ()
 		{
 			
-			this._Tile.AccosiateType<Pal>(_SelectedType);
+			this._Tile.AccosiateType<PalProperty>(_SelectedType);
 			
 
 		}
 		
-		public override void AfterUpdate ()
-		{
-//			ActionAdministrator.Instance.ApplyAction <SARandomTransform>(_Tile);
-			_Tile._Pal._Health -= 1;
-		}
+		
 			
 		private bool[,] Neighborhood = new bool[3, 3]{ 
 			{true,true,true},
@@ -76,24 +72,24 @@ namespace RuleAdministration.Rules
 		switch (type) {
 		case("tile_boden"):
 				status = true;
-				Debug.Log ("Boden found");
+//				Debug.Log ("Boden found");
 				break;
 		case("pal_A"):
-				status = (hits ["pal_A"] >= 0 || hits ["pal_B"] >= 0 || hits ["pal_C"] >= 0) // Or'd Minimal requirements
+				status = (hits ["pal_A"] >= 1 || hits ["pal_B"] >= 1 || hits ["pal_C"] >= 1) // Or'd Minimal requirements
 						&& hits ["pal_A"] <= 4 && hits ["pal_B"] <= 4 && hits ["pal_C"] <= 4;
-				Debug.Log ("A found " + status);
+//				Debug.Log ("A found " + status);
 				break;
 		case("pal_B"):
 				status = hits ["pal_A"] >= 3 && hits ["pal_A"] < int.MaxValue
 						&& hits ["pal_B"] >= 0 && hits ["pal_B"] <= 0 
 						&& hits ["pal_C"] >= 0 && hits ["pal_C"] < int.MaxValue;
-				Debug.Log ("B found " + status);
+//				Debug.Log ("B found " + status);
 				break;
 		case("pal_C"):
 				status = hits ["pal_A"] >= 3 && hits ["pal_A"] < int.MaxValue
 						&& hits ["pal_B"] >= 2 && hits ["pal_B"] < int.MaxValue
 						&& hits ["pal_C"] >= 0 && hits ["pal_C"] < int.MaxValue;
-				Debug.Log ("C found " + status);	         
+//				Debug.Log ("C found " + status);	         
 					break;
 			}
 				return status;

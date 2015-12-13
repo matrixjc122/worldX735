@@ -2,13 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Base : MonoBehaviour  
+public class BaseProperty : MonoBehaviour  
 {
 	
 	public virtual void Start()
 	{
-		this._Type = "None";
-		this._Health = 0;
+//		this._Health = 100;
 	}
 	
 	/// <summary>

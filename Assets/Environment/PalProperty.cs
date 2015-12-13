@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using RuleAdministration.Administrators;
 using RuleAdministration.Rules;
 
-public class Pal : Base {
+public class PalProperty : BaseProperty {
 
 	// Properties
 	public virtual int NutrientsStorage{set;get;}
@@ -23,22 +23,8 @@ public class Pal : Base {
 		
 	}
 	
-	override public void Start()
-	{
-		this._Type = "None";
-		this._Health = 100;	
-	}
 	
 	
-	public void OnGUI() {
-		
-		Vector2 targetPos;
-		targetPos = Camera.main.WorldToScreenPoint (transform.position);
-		Rect rec = new Rect(targetPos.x, Screen.height - targetPos.y, 40, 20);
-		
-		GUI.Label(rec, (int)(this._Health) + "");
-		
-	}
 	
 	
 	
